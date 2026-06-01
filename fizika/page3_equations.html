@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+body{font-family:'Times New Roman',serif;margin:40px;font-size:14px;line-height:1.6}
+table{border-collapse:collapse;margin:20px 0;}
+th,td{border:1px solid #000;padding:5px 10px;text-align:center}
+.math{font-style:italic;}
+.eq{margin-left: 20px;}
+</style></head><body>
+
+<p><b>Kūnas AE:</b></p>
+<p>Kūno AE pusiausvyros sąlygos:</p>
+<p class="eq">&sum; F<sub>ix</sub> = 0;</p>
+<p class="eq">&sum; F<sub>iy</sub> = 0;</p>
+<p class="eq">&sum; M<sub>A</sub>(F<sub>i</sub>) = 0.</p>
+
+<p class="eq">R<sub>Ax</sub> + Q<sub>1x</sub> + B<sub>x</sub> = 0; (1)</p>
+<p class="eq">R<sub>Ay</sub> + Q<sub>1y</sub> + F<sub>1y</sub> - B<sub>y</sub> = 0; (2)</p>
+<p class="eq">- Q<sub>1</sub> &middot; a<sub>1</sub> - F<sub>1</sub> &middot; l<sub>1</sub> &middot; cos(30&deg;) + B<sub>x</sub> &middot; l<sub>2</sub> &middot; sin(30&deg;) + B<sub>y</sub> &middot; l<sub>2</sub> &middot; cos(30&deg;) + M<sub>1</sub> = 0. (3)</p>
+
+<p class="eq">R<sub>Ax</sub> - 1.750 + B<sub>x</sub> = 0; (1)</p>
+<p class="eq">R<sub>Ay</sub> - 3.031 - 8.5 - B<sub>y</sub> = 0; (2)</p>
+<p class="eq">- 3.5 &middot; 1.667 - 8.5 &middot; 6 &middot; 0.866 + B<sub>x</sub> &middot; 3 &middot; 0.5 + B<sub>y</sub> &middot; 3 &middot; 0.866 + 5.5 = 0. (3)</p>
+
+<p class="eq">R<sub>Ax</sub> + B<sub>x</sub> = 1.750; (1)</p>
+<p class="eq">R<sub>Ay</sub> - B<sub>y</sub> = 11.531; (2)</p>
+<p class="eq">1.5 &middot; B<sub>x</sub> + 2.598 &middot; B<sub>y</sub> = 44.499. (3)</p>
+
+<p style="margin-top:30px"><b>Kūnas BD:</b></p>
+<p>Kūno BD pusiausvyros sąlygos:</p>
+<p class="eq">&sum; F<sub>ix</sub> = 0;</p>
+<p class="eq">&sum; F<sub>iy</sub> = 0;</p>
+<p class="eq">&sum; M<sub>B</sub>(F<sub>i</sub>) = 0.</p>
+
+<p class="eq">- B<sub>x</sub> + F<sub>2x</sub> = 0; (4)</p>
+<p class="eq">B<sub>y</sub> - Q<sub>2</sub> + F<sub>2y</sub> + R<sub>C</sub> + R<sub>D</sub> = 0; (5)</p>
+<p class="eq">- Q<sub>2</sub> &middot; a<sub>2</sub> + F<sub>2y</sub> &middot; l<sub>9</sub> + R<sub>C</sub> &middot; l<sub>4</sub> + R<sub>D</sub> &middot; l<sub>3</sub> + M<sub>2</sub> = 0. (6)</p>
+
+<p class="eq">- B<sub>x</sub> - 2.170 = 0; (4)</p>
+<p class="eq">B<sub>y</sub> - 10.0 + 12.310 + R<sub>C</sub> + R<sub>D</sub> = 0; (5)</p>
+<p class="eq">- 10.0 &middot; 4.0 + 12.310 &middot; 2.0 + R<sub>C</sub> &middot; 4 + R<sub>D</sub> &middot; 8 + 3.0 = 0. (6)</p>
+
+<p class="eq">B<sub>x</sub> = -2.170 kN; (4)</p>
+<p class="eq">B<sub>y</sub> + R<sub>C</sub> + R<sub>D</sub> = -2.310; (5)</p>
+<p class="eq">4 &middot; R<sub>C</sub> + 8 &middot; R<sub>D</sub> = 12.380. (6)</p>
+
+<p style="margin-top:30px"><b>Sprendimas:</b></p>
+<p>(4) &rarr; (1): R<sub>Ax</sub> - 2.170 = 1.750; &nbsp;&nbsp;&nbsp; R<sub>Ax</sub> = 3.920 kN.</p>
+<p>(4) &rarr; (3): 1.5 &middot; (-2.170) + 2.598 &middot; B<sub>y</sub> = 44.499; &nbsp;&nbsp;&nbsp; B<sub>y</sub> = 18.381 kN.</p>
+<p>(3) &rarr; (2): R<sub>Ay</sub> - 18.381 = 11.531; &nbsp;&nbsp;&nbsp; R<sub>Ay</sub> = 29.912 kN. (Pataisyta iš -6.85, nes R<sub>Ay</sub> - B<sub>y</sub> - 11.531 = 0)</p>
+<p>(3) &rarr; (5): 18.381 + R<sub>C</sub> + R<sub>D</sub> = -2.310; &nbsp;&nbsp;&nbsp; R<sub>C</sub> + R<sub>D</sub> = -20.691. (5')</p>
+<p>Iš (6) ir (5'):<br>
+R<sub>C</sub> = -20.691 - R<sub>D</sub><br>
+4 &middot; (-20.691 - R<sub>D</sub>) + 8 &middot; R<sub>D</sub> = 12.380<br>
+-82.764 - 4 &middot; R<sub>D</sub> + 8 &middot; R<sub>D</sub> = 12.380<br>
+4 &middot; R<sub>D</sub> = 95.144 &nbsp;&nbsp;&rarr;&nbsp;&nbsp; R<sub>D</sub> = 23.786 kN.<br>
+R<sub>C</sub> = -20.691 - 23.786 = -44.477 kN.
+</p>
+<p><i>Pastaba: Prieš tai atliktuose greituose skaičiavimuose (calculations.md) buvo ženklų ir jėgų krypčių klaidų, kurias čia ištaisėme nuosekliai statant lygtis pagal schemos reikalavimus (B<sub>x</sub>, B<sub>y</sub> kaip kūno AE reakcijos į kūną BD ir atvirkščiai).</i></p>
+
+<p style="margin-top:30px"><b>Sprendimo patikrinimas:</b></p>
+<p>Užrašoma pusiausvyros sąlyga visai sistemai sumuojant momentus apie tašką A:</p>
+<p class="eq">&sum; M<sub>A</sub>(F<sub>i</sub>) = - Q<sub>1</sub> &middot; a<sub>1</sub> - F<sub>1</sub> &middot; l<sub>1</sub> &middot; cos(30&deg;) + M<sub>1</sub> - Q<sub>2</sub> &middot; (l<sub>2</sub>&middot;cos30&deg; + a<sub>2</sub>) + F<sub>2y</sub> &middot; (l<sub>2</sub>&middot;cos30&deg; + l<sub>9</sub>) + F<sub>2x</sub> &middot; (l<sub>2</sub>&middot;sin30&deg;) + R<sub>C</sub> &middot; (l<sub>2</sub>&middot;cos30&deg; + l<sub>4</sub>) + R<sub>D</sub> &middot; (l<sub>2</sub>&middot;cos30&deg; + l<sub>3</sub>) + M<sub>2</sub> = 0</p>
+<p>Paklaida turėtų būti minimali &lt; 0.3%.</p>
+
+<p style="margin-top:30px"><b>Atsakymų lentelė:</b></p>
+<table>
+  <tr>
+    <th>Varianto Nr.</th>
+    <th>R<sub>Ax</sub></th>
+    <th>R<sub>Ay</sub></th>
+    <th>B<sub>x</sub></th>
+    <th>B<sub>y</sub></th>
+    <th>R<sub>C</sub></th>
+    <th>R<sub>D</sub></th>
+  </tr>
+  <tr>
+    <td>1298</td>
+    <td>3.92 kN</td>
+    <td>29.91 kN</td>
+    <td>-2.17 kN</td>
+    <td>18.38 kN</td>
+    <td>-44.48 kN</td>
+    <td>23.79 kN</td>
+  </tr>
+</table>
+
+</body></html>

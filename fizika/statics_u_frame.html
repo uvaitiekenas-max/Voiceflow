@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: 'Times New Roman', serif; margin: 40px; font-size: 15px; line-height: 1.6; counter-reset: page; }
+.eq { margin-left: 20px; margin-top:2px; margin-bottom:2px; }
+table { border-collapse: collapse; margin: 20px 0; }
+th, td { border: 1px solid #000; padding: 5px 15px; text-align: center; }
+.math { font-style: italic; }
+.schema-container { margin: 30px 0; }
+svg text { font-family: 'Times New Roman', serif; font-size: 14px; }
+.title-page { text-align: center; margin-bottom: 50px; position: relative; }
+.title-page h1 { font-size: 20px; margin: 10px; } 
+.title-page p { margin: 5px; }
+.system-bracket { border-left: 2px solid black; padding-left: 10px; margin-left: 20px; display: inline-block; }
+@page { size: A4; margin: 20mm; @bottom-center { content: counter(page); } }
+@media print {
+    body { margin: 0; font-size: 14pt; }
+    .page-break { page-break-before: always; }
+    .title-page { page-break-after: always; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .title-header { position: absolute; top: 0; right: 0; text-align: right; }
+    #pageFooter::after { counter-increment: page; content: counter(page); }
+}
+</style>
+</head>
+<body>
+
+<div class="title-page">
+<div class="title-header">Ugnius Vaitiekėnas, AMf 25/3</div>
+<h1 style="margin-top: 40vh;">Statikos Namų Darbas</h1>
+<h1>U-formos rėmo atraminių reakcijų skaičiavimas</h1>
+</div>
+
+<h2>1. Užduoties lapas</h2>
+<p><b>Užduoties duomenys:</b></p>
+<p><span class="math">l<sub>1</sub></span> = 4 m; <span class="math">l<sub>2</sub></span> = 5 m; <span class="math">l<sub>3</sub></span> = 1 m; <span class="math">l<sub>4</sub></span> = 1 m; <span class="math">l<sub>5</sub></span> = 5 m; <span class="math">l<sub>6</sub></span> = 1,5 m; <span class="math">l<sub>7</sub></span> = 2 m; <span class="math">l<sub>8</sub></span> = 7 m;</p>
+<p><span class="math">F</span> = 30 kN; <span class="math">q<sub>11</sub></span> = 7 kN/m; <span class="math">q<sub>12</sub></span> = 35 kN/m; <span class="math">M</span> = 18 kNm; <span class="math">&alpha;</span> = 50&deg;.</p>
+
+<p>Rasti rėmo atramines reakcijas. Atlikti patikrinimą, parašant momentų lygtį apie tašką O.</p>
+
+<p><b>2. Skaičiuojamosios schemos paruošimas:</b></p>
+<p>Priimame tašką O kaip koordinačių sistemos pradžią O(0; 0). Pagal duotus matmenis nustatome taškų koordinates: A(9; 7), B(0; 9,5). Jėga F veikia taške K(5; 0).</p>
+
+<p>Išskirstytą trapecinę apkrovą pakeičiame koncentruota jėga Q. Ją išskaidome į stačiakampę ir trikampę dalis. Atstojamosios modulis:</p>
+<p class="eq"><span class="math">Q</span> = (q<sub>11</sub> + q<sub>12</sub>)/2 &middot; l<sub>6</sub> = (7 + 35)/2 &middot; 1,5 = 31,5 kN.</p>
+<p>Apkrova veikia horizontaliai: Q<sub>x</sub> = 31,5 kN, Q<sub>y</sub> = 0 kN.</p>
+<p>Jos pridėjimo taško y koordinatė (svorio centras): y<sub>Q</sub> = l<sub>4</sub> + l<sub>5</sub> + l<sub>6</sub>/3 &middot; (2q<sub>12</sub> + q<sub>11</sub>) / (q<sub>12</sub> + q<sub>11</sub>) = 6,92 m. Taškas P(0; 6,92).</p>
+<p>Atramos B reakcijos R<sub>B</sub> kryptis yra statmena nuožulniajai plokštumai. Plokštuma pasvirusi 50&deg; kampu į x ašį, todėl statmens kampas su x ašimi yra 90&deg; + 50&deg; = 140&deg;.</p>
+
+<p><b><u>Užduoties schema:</u></b></p>
+<div class="schema-container">
+
+    <svg width="700" height="550" viewBox="0 0 700 550">
+        
+    <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+        </marker>
+        <marker id="arrow_right" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+        </marker>
+    </defs>
+    
+        <!-- Strypai -->
+        <line x1="100.0" y1="52.5" x2="100.0" y2="480.0" stroke="black" stroke-width="4" />
+        <line x1="100.0" y1="480.0" x2="505.0" y2="480.0" stroke="black" stroke-width="4" />
+        <line x1="505.0" y1="480.0" x2="505.0" y2="165.0" stroke="black" stroke-width="4" />
+        
+        <!-- Atramos A -->
+        <circle cx="505.0" cy="165.0" r="4" fill="white" stroke="black" stroke-width="2"/>
+        <path d="M 505.0 161.0 L 525.0 150.0 L 525.0 180.0 Z" fill="none" stroke="black" stroke-width="2"/>
+        <line x1="525.0" y1="140.0" x2="525.0" y2="190.0" stroke="black" stroke-width="2"/>
+        <line x1="525.0" y1="140.0" x2="533.0" y2="135.0" stroke="black" stroke-width="1"/><line x1="525.0" y1="150.0" x2="533.0" y2="145.0" stroke="black" stroke-width="1"/><line x1="525.0" y1="160.0" x2="533.0" y2="155.0" stroke="black" stroke-width="1"/><line x1="525.0" y1="170.0" x2="533.0" y2="165.0" stroke="black" stroke-width="1"/><line x1="525.0" y1="180.0" x2="533.0" y2="175.0" stroke="black" stroke-width="1"/><line x1="525.0" y1="190.0" x2="533.0" y2="185.0" stroke="black" stroke-width="1"/>
+        
+        <!-- Atrama B -->
+        <circle cx="100.0" cy="52.5" r="4" fill="white" stroke="black" stroke-width="2"/>
+        <g transform="translate(100.0, 52.5) rotate(140)">
+            <path d="M 0 4 L -15 20 L 15 20 Z" fill="none" stroke="black" stroke-width="2"/>
+            <line x1="-25" y1="20" x2="25" y2="20" stroke="black" stroke-width="2"/>
+            <!-- Hatch marks on the support -->
+            <line x1="-20" y1="20" x2="-25" y2="28" stroke="black" stroke-width="1"/>
+            <line x1="-10" y1="20" x2="-15" y2="28" stroke="black" stroke-width="1"/>
+            <line x1="0" y1="20" x2="-5" y2="28" stroke="black" stroke-width="1"/>
+            <line x1="10" y1="20" x2="5" y2="28" stroke="black" stroke-width="1"/>
+            <line x1="20" y1="20" x2="15" y2="28" stroke="black" stroke-width="1"/>
+        </g>
+        
+        <!-- Kampas alfa -->
+        <line x1="100.0" y1="42.5" x2="180.0" y2="42.5" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="120.0" y1="66.3350718518842" x2="180.0" y2="137.84028740753678" stroke="gray" stroke-width="1"/>
+        <path d="M 150.0 42.5 A 50 50 0 0 1 132.13938048432698 80.8022221559489" fill="none" stroke="gray" stroke-width="1"/>
+        <text x="160.0" y="62.5" font-style="italic" fill="gray">&alpha;</text>
+
+        <!-- Jėga F -->
+        <line x1="325.0" y1="520.0" x2="325.0" y2="480.0" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+        <text x="335.0" y="510.0" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">F</tspan><tspan dy="5" font-size="10" text-decoration="none"></tspan></text>
+
+        <!-- Išskirstyta apkrova -->
+        <polygon points="100.0,210.0 90.0,210.0 50.0,142.5 100.0,142.5" fill="none" stroke="black" stroke-width="1"/>
+        <line x1="90.0" y1="210.0" x2="100.0" y2="210.0" stroke="black" stroke-width="1" marker-end="url(#arrow_right)"/>
+        <line x1="50.0" y1="142.5" x2="100.0" y2="142.5" stroke="black" stroke-width="1" marker-end="url(#arrow_right)"/>
+        <line x1="76.8" y1="187.72500000000002" x2="100.0" y2="187.72500000000002" stroke="black" stroke-width="1" marker-end="url(#arrow_right)"/>
+        <line x1="63.599999999999994" y1="165.45" x2="100.0" y2="165.45" stroke="black" stroke-width="1" marker-end="url(#arrow_right)"/>
+        <text x="60.0" y="225.0" font-style="italic">q&#8321;&#8321;</text>
+        <text x="50.0" y="137.5" font-style="italic">q&#8321;&#8322;</text>
+
+        <!-- Momentas -->
+        <path d="M 485.0 292.5 A 25 25 0 1 1 485.0 352.5" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="455.0" y="327.5" font-style="italic" font-weight="bold">M</text>
+
+        <!-- Matmenys horizontalūs (apačioje) -->
+        <line x1="100.0" y1="480.0" x2="100.0" y2="540" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="100.0" y1="480.0" x2="100.0" y2="540" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="325.0" y1="480.0" x2="325.0" y2="540" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="505.0" y1="480" x2="505.0" y2="540" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        
+        <line x1="100.0" y1="530" x2="100.0" y2="530" stroke="gray" stroke-width="1"/>
+        <line x1="100.0" y1="530" x2="325.0" y2="530" stroke="gray" stroke-width="1"/>
+        <line x1="325.0" y1="530" x2="505.0" y2="530" stroke="gray" stroke-width="1"/>
+        
+        <text x="90.0" y="525" fill="gray">l&#8323;</text>
+        <text x="202.5" y="525" fill="gray">l&#8322;</text>
+        <text x="405.0" y="525" fill="gray">l&#8321;</text>
+
+        <!-- Matmenys vertikalūs (kairėje) -->
+        <line x1="100.0" y1="480.0" x2="30" y2="480.0" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="100.0" y1="435.0" x2="30" y2="435.0" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="100.0" y1="210.0" x2="30" y2="210.0" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="100.0" y1="142.5" x2="30" y2="142.5" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="100.0" y1="52.5" x2="30" y2="52.5" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        
+        <line x1="40" y1="480.0" x2="40" y2="435.0" stroke="gray" stroke-width="1"/>
+        <line x1="40" y1="435.0" x2="40" y2="210.0" stroke="gray" stroke-width="1"/>
+        <line x1="40" y1="210.0" x2="40" y2="142.5" stroke="gray" stroke-width="1"/>
+        <line x1="40" y1="142.5" x2="40" y2="52.5" stroke="gray" stroke-width="1"/>
+        
+        <text x="20" y="462.5" fill="gray">l&#8324;</text>
+        <text x="20" y="327.5" fill="gray">l&#8325;</text>
+        <text x="20" y="181.25" fill="gray">l&#8326;</text>
+        <text x="20" y="102.5" fill="gray">l&#8327;</text>
+
+        <!-- Matmenys vertikalūs (dešinėje) -->
+        <line x1="505.0" y1="165.0" x2="555.0" y2="165.0" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="505.0" y1="480.0" x2="555.0" y2="480.0" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="545.0" y1="165.0" x2="545.0" y2="480.0" stroke="gray" stroke-width="1"/>
+        <text x="555.0" y="327.5" fill="gray">l&#8334;</text>
+
+        <!-- Taškas O -->
+        <circle cx="100.0" cy="480.0" r="3" fill="black" stroke="black" />
+        <text x="80.0" y="485.0" font-style="italic">O</text>
+
+        <text x="490.0" y="150.0" font-style="italic" font-size="18">A</text>
+        <text x="75.0" y="62.5" font-style="italic" font-size="18">B</text>
+    </svg>
+    
+</div>
+
+<p><b><u>Skaičiuojamoji schema:</u></b></p>
+<div class="schema-container">
+
+    <svg width="700" height="550" viewBox="0 0 700 550">
+        
+    <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+        </marker>
+        <marker id="arrow_right" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+        </marker>
+    </defs>
+    
+        <!-- Strypai -->
+        <line x1="100.0" y1="52.5" x2="100.0" y2="480.0" stroke="gray" stroke-width="4" />
+        <line x1="100.0" y1="480.0" x2="505.0" y2="480.0" stroke="gray" stroke-width="4" />
+        <line x1="505.0" y1="480.0" x2="505.0" y2="165.0" stroke="gray" stroke-width="4" />
+        
+        <circle cx="505.0" cy="165.0" r="4" fill="white" stroke="gray" stroke-width="2"/>
+        <circle cx="100.0" cy="52.5" r="4" fill="white" stroke="gray" stroke-width="2"/>
+        
+        <!-- Reakcijos -->
+        <line x1="505.0" y1="165.0" x2="455.0" y2="165.0" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="445.0" y="160.0" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">Ax</tspan></text>
+        <line x1="505.0" y1="165.0" x2="505.0" y2="215.0" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="515.0" y="205.0" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">Ay</tspan></text>
+        
+        <line x1="100.0" y1="52.5" x2="61.6977778440511" y2="20.36061951567303" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="51.6977778440511" y="10.36061951567303" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">B</tspan></text>
+
+        <!-- Jėga F -->
+        <line x1="325.0" y1="520.0" x2="325.0" y2="480.0" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+        <text x="335.0" y="510.0" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">F</tspan><tspan dy="5" font-size="10" text-decoration="none"></tspan></text>
+        
+        <!-- Jėga Q atstojamoji -->
+        <line x1="50.0" y1="168.75" x2="100.0" y2="168.75" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+        <text x="40.0" y="158.75" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">Q</tspan><tspan dy="5" font-size="10" text-decoration="none"></tspan></text>
+
+        <!-- Momentas -->
+        <path d="M 485.0 292.5 A 25 25 0 1 1 485.0 352.5" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="455.0" y="327.5" font-style="italic" font-weight="bold">M</text>
+
+        <!-- Patikrinimo taškas O -->
+        <circle cx="100.0" cy="480.0" r="3" fill="none" stroke="gray" />
+        <text x="80.0" y="485.0" font-style="italic" fill="gray">O</text>
+        
+        <text x="490.0" y="150.0" font-style="italic" font-size="18">A</text>
+        <text x="75.0" y="62.5" font-style="italic" font-size="18">B</text>
+    </svg>
+    
+</div>
+
+<div class="page-break"></div>
+<h2>3. Sprendimas</h2>
+
+<div style="margin-bottom: 20px;">
+    <p>Užrašomos rėmo pusiausvyros sąlygos:</p>
+    <div class="system-bracket">
+        <p class="eq">&sum; M<sub>A</sub> = 0;</p>
+        <p class="eq">&sum; F<sub>ix</sub> = 0;</p>
+        <p class="eq">&sum; F<sub>iy</sub> = 0.</p>
+    </div>
+    <div class="system-bracket">
+        <p class="eq">-R<sub>B</sub> &middot; sin(140&deg;) &middot; (x<sub>A</sub> - x<sub>B</sub>) - R<sub>B</sub> &middot; cos(140&deg;) &middot; (y<sub>B</sub> - y<sub>A</sub>) + Q &middot; (y<sub>A</sub> - y<sub>P</sub>) - F &middot; (x<sub>A</sub> - x<sub>K</sub>) - M = 0; (1)</p>
+        <p class="eq">R<sub>Ax</sub> + R<sub>B</sub> &middot; cos(140&deg;) + Q = 0; (2)</p>
+        <p class="eq">R<sub>Ay</sub> + R<sub>B</sub> &middot; sin(140&deg;) + F = 0. (3)</p>
+    </div>
+</div>
+
+<p>Iš (1) lygties randame R<sub>B</sub>:</p>
+<p class="eq">R<sub>B</sub> &middot; ( -sin(140&deg;) &middot; 9 - cos(140&deg;) &middot; 2,5 ) + 31,5 &middot; 0,0833 - 30 &middot; 4 - 18 = 0</p>
+<p class="eq">R<sub>B</sub> &middot; (-3,87) + (2,62) + (-120) - 18 = 0 &rarr; R<sub>B</sub> = -35 kN.</p>
+
+<p>Iš (2) lygties randame R<sub>Ax</sub>:</p>
+<p class="eq">R<sub>Ax</sub> = - R<sub>B</sub> &middot; cos(140&deg;) - Q = -(-35) &middot; cos(140&deg;) - 31,5 = -58,3 kN.</p>
+
+<p>Iš (3) lygties randame R<sub>Ay</sub>:</p>
+<p class="eq">R<sub>Ay</sub> = - R<sub>B</sub> &middot; sin(140&deg;) - F = -(-35) &middot; sin(140&deg;) - 30 = -7,51 kN.</p>
+
+<h3>3.1. Sprendimo patikrinimas</h3>
+<p>Užrašoma pusiausvyros sąlyga visai sistemai apie tašką O(0; 0).</p>
+<p class="eq">&sum; M<sub>O</sub> = -R<sub>Ax</sub> &middot; y<sub>A</sub> + R<sub>Ay</sub> &middot; x<sub>A</sub> - R<sub>Bx</sub> &middot; y<sub>B</sub> + R<sub>By</sub> &middot; x<sub>B</sub> - Q &middot; y<sub>P</sub> + F &middot; x<sub>K</sub> - M = 0</p>
+<p class="eq">&sum; M<sub>O</sub> = -(-58,3) &middot; 7 + (-7,51) &middot; 9 - (26,8) &middot; 9,5 + (-22,5) &middot; 0 - 31,5 &middot; 6,92 + 30 &middot; 5 - 18 = 0</p>
+<p class="eq">&sum; M<sub>O</sub> = 340 + -255 + -218 + 150 - 18 = 0 kN</p>
+
+<h3>3.2. Paklaidos skaičiavimas</h3>
+<p>&Delta; = (0 / 500) &middot; 100% = 0% &lt; 0,3%.</p>
+
+<div class="page-break"></div>
+<h2>4. Atsakymų lentelė</h2>
+<table>
+  <tr>
+    <th>R<sub>B</sub>, kN</th>
+    <th>R<sub>Ax</sub>, kN</th>
+    <th>R<sub>Ay</sub>, kN</th>
+  </tr>
+  <tr>
+    <td>-35</td>
+    <td>-58,3</td>
+    <td>-7,51</td>
+  </tr>
+</table>
+
+</body>
+</html>

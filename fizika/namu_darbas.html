@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: 'Times New Roman', serif; margin: 40px; font-size: 15px; line-height: 1.6; counter-reset: page; }
+.eq { margin-left: 20px; margin-top:2px; margin-bottom:2px; }
+table { border-collapse: collapse; margin: 20px 0; }
+th, td { border: 1px solid #000; padding: 5px 15px; text-align: center; }
+.math { font-style: italic; }
+.schema-container { margin: 30px 0; }
+svg text { font-family: 'Times New Roman', serif; font-size: 14px; }
+.title-page { text-align: center; margin-bottom: 50px; position: relative; }
+.title-page h1 { font-size: 20px; margin: 10px; } 
+.title-page p { margin: 5px; }
+.system-bracket { border-left: 2px solid black; padding-left: 10px; margin-left: 20px; display: inline-block; }
+@page { size: A4; margin: 20mm; @bottom-center { content: counter(page); } }
+@media print {
+    body { margin: 0; font-size: 14pt; }
+    .page-break { page-break-before: always; }
+    .title-page { page-break-after: always; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .title-header { position: absolute; top: 0; right: 0; text-align: right; }
+    #pageFooter::after { counter-increment: page; content: counter(page); }
+}
+</style>
+</head>
+<body>
+
+<div class="title-page">
+<div class="title-header">Ugnius Vaitiekėnas, AMf 25/3</div>
+<h1 style="margin-top: 40vh;">Namų darbas Nr.1</h1>
+<h1>Dviejų kūnų sistema</h1>
+<p>Varianto Nr.1298</p>
+</div>
+
+<h2>1. Užduoties lapas</h2>
+<p><b>Užduoties duomenys:</b></p>
+<p><span class="math">l<sub>1</sub></span> = 6,0 m; <span class="math">l<sub>2</sub></span> = 3,0 m; <span class="math">l<sub>3</sub></span> = 8,0 m; <span class="math">l<sub>4</sub></span> = 4,0 m; <span class="math">l<sub>5</sub></span> = 1,0 m; <span class="math">l<sub>6</sub></span> = 2,0 m; <span class="math">l<sub>7</sub></span> = 2,0 m; <span class="math">l<sub>8</sub></span> = 4,0 m; <span class="math">l<sub>9</sub></span> = 2,0 m;</p>
+<p><span class="math">&alpha;</span> = 330&deg;; <span class="math">&beta;</span> = 0&deg;; <span class="math">&delta;</span> = 90&deg;; <span class="math">&gamma;</span> = 100&deg;;</p>
+<p><span class="math">q<sub>11</sub></span> = 3,5 kN/m; <span class="math">q<sub>12</sub></span> = 0; <span class="math">q<sub>2</sub></span> = 2,5 kN/m; <span class="math">F<sub>1</sub></span> = 8,5 kN; <span class="math">F<sub>2</sub></span> = 12,5 kN; <span class="math">M<sub>1</sub></span> = 5,5 kNm; <span class="math">M<sub>2</sub></span> = 3,0 kNm.</p>
+
+<p style="margin-top:20px">Schemos mazgų įtvirtinimai:</p>
+<p>A - nepaslankus šarnyras &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; B - šarnyrinis kūnų sujungimas<br>
+C - paslankus šarnyras lygiagrečia strypui plokštuma &nbsp;&nbsp;&nbsp;&nbsp; D - paslankus šarnyras horizontalia plokštuma</p>
+
+<p>Rasti: R<sub>Ax</sub>; R<sub>Ay</sub>; B<sub>x</sub>; B<sub>y</sub>; R<sub>C</sub>; R<sub>D</sub>. Informacija schemos braižymui: x<sub>D</sub>= 10,6 m; y<sub>D</sub>= -1,5 m</p>
+
+<p><b>2. Skaičiuojamosios schemos paruošimas:</b></p>
+<p>Išskirstytą apkrovą pakeičiame koncentruotomis jėgomis:</p>
+<p>
+<span class="math">Q<sub>1</sub></span> = 1/2 &middot; <span class="math">q<sub>11</sub></span> &middot; <span class="math">l<sub>6</sub></span> = 1/2 &middot; 3,5 &middot; 2 = 3,5 kN;<br>
+<span class="math">Q<sub>2</sub></span> = <span class="math">q<sub>2</sub></span> &middot; <span class="math">l<sub>8</sub></span> = 2,5 &middot; 4 = 10 kN.
+</p>
+<p>
+Jėgos <span class="math">Q<sub>1</sub></span> pridėjimo taškas nuo A: <span class="math">a<sub>1</sub></span> = <span class="math">l<sub>5</sub></span> + 1/3 <span class="math">l<sub>6</sub></span> = 1 + 1/3 &middot; 2 = 1,667 m.<br>
+Jėgos <span class="math">Q<sub>2</sub></span> pridėjimo taškas nuo D: <span class="math">a<sub>2</sub></span> = <span class="math">l<sub>7</sub></span> + 1/2 <span class="math">l<sub>8</sub></span> = 2 + 1/2 &middot; 4 = 4 m
+
+<p><b><u>Užduoties schema:</u></b></p>
+<div class="schema-container">
+<svg width="800" height="400" viewBox="0 0 800 400">
+    
+        <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+            </marker>
+        </defs>
+        
+    
+    <!-- Supports -->
+    <path d="M 150 250 L 135 270 L 165 270 Z" fill="none" stroke="black" stroke-width="2"/>
+    <line x1="125" y1="270" x2="175" y2="270" stroke="black" stroke-width="2"/>
+    <line x1="125.0" y1="270" x2="120.0" y2="278" stroke="black" stroke-width="1"/><line x1="135.0" y1="270" x2="130.0" y2="278" stroke="black" stroke-width="1"/><line x1="145.0" y1="270" x2="140.0" y2="278" stroke="black" stroke-width="1"/><line x1="155.0" y1="270" x2="150.0" y2="278" stroke="black" stroke-width="1"/><line x1="165.0" y1="270" x2="160.0" y2="278" stroke="black" stroke-width="1"/><line x1="175.0" y1="270" x2="170.0" y2="278" stroke="black" stroke-width="1"/>
+    
+    <circle cx="510.932667397366" cy="327.5" r="5" fill="none" stroke="black" stroke-width="2"/>
+    <circle cx="530.932667397366" cy="327.5" r="5" fill="none" stroke="black" stroke-width="2"/>
+    <path d="M 520.932667397366 302.5 L 505.932667397366 322.5 L 535.932667397366 322.5 Z" fill="none" stroke="black" stroke-width="2"/>
+    <line x1="495.932667397366" y1="332.5" x2="545.932667397366" y2="332.5" stroke="black" stroke-width="2"/>
+    <line x1="495.932667397366" y1="332.5" x2="490.932667397366" y2="340.5" stroke="black" stroke-width="1"/><line x1="505.932667397366" y1="332.5" x2="500.932667397366" y2="340.5" stroke="black" stroke-width="1"/><line x1="515.932667397366" y1="332.5" x2="510.932667397366" y2="340.5" stroke="black" stroke-width="1"/><line x1="525.932667397366" y1="332.5" x2="520.932667397366" y2="340.5" stroke="black" stroke-width="1"/><line x1="535.932667397366" y1="332.5" x2="530.932667397366" y2="340.5" stroke="black" stroke-width="1"/><line x1="545.932667397366" y1="332.5" x2="540.932667397366" y2="340.5" stroke="black" stroke-width="1"/>
+    
+    <circle cx="370.93266739736606" cy="327.5" r="5" fill="none" stroke="black" stroke-width="2"/>
+    <circle cx="390.93266739736606" cy="327.5" r="5" fill="none" stroke="black" stroke-width="2"/>
+    <path d="M 380.93266739736606 302.5 L 365.93266739736606 322.5 L 395.93266739736606 322.5 Z" fill="none" stroke="black" stroke-width="2"/>
+    <line x1="355.93266739736606" y1="332.5" x2="405.93266739736606" y2="332.5" stroke="black" stroke-width="2"/>
+    <line x1="355.93266739736606" y1="332.5" x2="350.93266739736606" y2="340.5" stroke="black" stroke-width="1"/><line x1="365.93266739736606" y1="332.5" x2="360.93266739736606" y2="340.5" stroke="black" stroke-width="1"/><line x1="375.93266739736606" y1="332.5" x2="370.93266739736606" y2="340.5" stroke="black" stroke-width="1"/><line x1="385.93266739736606" y1="332.5" x2="380.93266739736606" y2="340.5" stroke="black" stroke-width="1"/><line x1="395.93266739736606" y1="332.5" x2="390.93266739736606" y2="340.5" stroke="black" stroke-width="1"/><line x1="405.93266739736606" y1="332.5" x2="400.93266739736606" y2="340.5" stroke="black" stroke-width="1"/>
+
+    <!-- Bodies -->
+    <line x1="150" y1="250" x2="331.8653347947321" y2="355.0" stroke="black" stroke-width="4" />
+    <line x1="240.93266739736606" y1="302.5" x2="520.932667397366" y2="302.5" stroke="black" stroke-width="4" />
+    <circle cx="150" cy="250" r="4" fill="white" stroke="black" stroke-width="2"/>
+    <circle cx="240.93266739736606" cy="302.5" r="4" fill="white" stroke="black" stroke-width="2"/>
+    
+    <!-- Dimensions for BD -->
+    <line x1="240.93266739736606" y1="242.5" x2="520.932667397366" y2="242.5" stroke="gray" stroke-width="1"/>
+    <line x1="240.93266739736606" y1="237.5" x2="240.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="310.93266739736606" y1="237.5" x2="310.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="380.93266739736606" y1="237.5" x2="380.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="450.93266739736606" y1="237.5" x2="450.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="520.932667397366" y1="237.5" x2="520.932667397366" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="240.93266739736606" y1="242.5" x2="240.93266739736606" y2="287.5" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+    <line x1="520.932667397366" y1="242.5" x2="520.932667397366" y2="287.5" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+    <text x="265.93266739736606" y="237.5" fill="gray">2</text>
+    <text x="335.93266739736606" y="237.5" fill="gray">2</text>
+    <text x="405.93266739736606" y="237.5" fill="gray">2</text>
+    <text x="475.93266739736606" y="237.5" fill="gray">2</text>
+
+    <!-- Dimensions for AE -->
+    <g transform="translate(150, 250) rotate(30)">
+        <line x1="0" y1="50" x2="210" y2="50" stroke="gray" stroke-width="1"/>
+        <line x1="0" y1="45" x2="0" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="35" y1="45" x2="35" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="105" y1="45" x2="105" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="210" y1="45" x2="210" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="0" y1="10" x2="0" y2="50" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="210" y1="10" x2="210" y2="50" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <text x="7.5" y="40" fill="gray">1</text>
+        <text x="60" y="40" fill="gray">2</text>
+        <text x="147.5" y="40" fill="gray">3</text>
+    </g>
+
+    <!-- Angles -->
+    <line x1="150" y1="250" x2="200" y2="250" stroke="gray" stroke-width="1"/>
+    <path d="M 190 250 A 40 40 0 1 0 184.64101615137756 270.0" fill="none" stroke="gray" stroke-width="1"/>
+    <text x="195" y="270" fill="gray" font-size="12">330&deg;</text>
+
+    <line x1="450.932667397366" y1="302.5" x2="400.932667397366" y2="302.5" stroke="gray" stroke-width="1"/>
+    <path d="M 420.932667397366 302.5 A 30 30 0 0 1 445.7232220673581 272.9557674096338" fill="none" stroke="gray" stroke-width="1"/>
+    <text x="410.932667397366" y="322.5" fill="gray" font-size="12">100&deg;</text>
+    
+    <!-- F1 angle -->
+    <path d="M 349.1858428704209 365.0 A 20 20 0 0 0 331.8653347947321 375.0" fill="none" stroke="gray" stroke-width="1"/>
+    <text x="356.8653347947321" y="340.0" fill="gray" font-size="12">90&deg;</text>
+
+    <text x="125" y="265" font-style="italic" font-size="18">A</text>
+    <text x="225.93266739736606" y="327.5" font-style="italic" font-size="18">B</text>
+    <text x="540.932667397366" y="292.5" font-style="italic" font-size="18">D</text>
+    <text x="370.93266739736606" y="287.5" font-style="italic" font-size="18">C</text>
+    <text x="341.8653347947321" y="365.0" font-style="italic" font-size="18">E</text>
+
+    <!-- F1, F2 -->
+    <line x1="331.8653347947321" y1="305.0" x2="331.8653347947321" y2="355.0" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="316.8653347947321" y="330.0" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">F</tspan><tspan dy="5" font-size="10" text-decoration="none">1</tspan></text>
+    
+    <line x1="442.2502585140195" y1="253.2596123493896" x2="450.932667397366" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="430.932667397366" y="277.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">F</tspan><tspan dy="5" font-size="10" text-decoration="none">2</tspan></text>
+    
+    <!-- Distributed Loads q2 (Pointing UP) -->
+    <rect x="310.932667397366" y="302.5" width="140" height="25" fill="none" stroke="black"/>
+    <line x1="310.932667397366" y1="327.5" x2="310.932667397366" y2="302.5" stroke="black" marker-end="url(#arrow)"/>
+    <line x1="345.932667397366" y1="327.5" x2="345.932667397366" y2="302.5" stroke="black" marker-end="url(#arrow)"/>
+    <line x1="380.932667397366" y1="327.5" x2="380.932667397366" y2="302.5" stroke="black" marker-end="url(#arrow)"/>
+    <line x1="415.932667397366" y1="327.5" x2="415.932667397366" y2="302.5" stroke="black" marker-end="url(#arrow)"/>
+    <line x1="450.932667397366" y1="327.5" x2="450.932667397366" y2="302.5" stroke="black" marker-end="url(#arrow)"/>
+    <text x="380.932667397366" y="347.5" font-style="italic">q&#8322;</text>
+    
+    <!-- Distributed Loads q11, q12 -->
+    <g transform="translate(150, 250) rotate(30)">
+        <polygon points="35,0 35,-30 105,0" fill="none" stroke="black"/>
+        <line x1="35.0" y1="-30" x2="35.0" y2="0" stroke="black" marker-end="url(#arrow)"/>
+        <line x1="52.5" y1="-22.5" x2="52.5" y2="0" stroke="black" marker-end="url(#arrow)"/>
+        <line x1="70.0" y1="-15" x2="70.0" y2="0" stroke="black" marker-end="url(#arrow)"/>
+        <line x1="87.5" y1="-7.5" x2="87.5" y2="0" stroke="black" marker-end="url(#arrow)"/>
+        <text x="52.5" y="-35" font-style="italic" transform="rotate(-30, 52.5, -35)">q&#8311;&#8321;</text>
+    </g>
+
+    <!-- Moments -->
+    <path d="M 180 270 A 30 30 0 1 0 130 230" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="120" y="225" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">M</tspan><tspan dy="5" font-size="10" text-decoration="none">1</tspan></text>
+    <path d="M 290.93266739736606 322.5 A 30 30 0 1 0 250.93266739736606 272.5" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="255.93266739736606" y="267.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">M</tspan><tspan dy="5" font-size="10" text-decoration="none">2</tspan></text>
+</svg>
+</div>
+
+<p><b><u>Skaičiuojamoji schema:</u></b></p>
+<div class="schema-container">
+<svg width="800" height="400" viewBox="0 0 800 400">
+    
+        <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+            </marker>
+        </defs>
+        
+    
+    <!-- Bodies -->
+    <line x1="150" y1="250" x2="331.8653347947321" y2="355.0" stroke="black" stroke-width="4" />
+    <line x1="240.93266739736606" y1="302.5" x2="520.932667397366" y2="302.5" stroke="black" stroke-width="4" />
+    
+    <!-- Dimensions for BD -->
+    <line x1="240.93266739736606" y1="242.5" x2="520.932667397366" y2="242.5" stroke="gray" stroke-width="1"/>
+    <line x1="240.93266739736606" y1="237.5" x2="240.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="310.93266739736606" y1="237.5" x2="310.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="380.93266739736606" y1="237.5" x2="380.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="450.93266739736606" y1="237.5" x2="450.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="520.932667397366" y1="237.5" x2="520.932667397366" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="240.93266739736606" y1="242.5" x2="240.93266739736606" y2="287.5" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+    <line x1="520.932667397366" y1="242.5" x2="520.932667397366" y2="287.5" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+    <text x="265.93266739736606" y="237.5" fill="gray">2</text>
+    <text x="335.93266739736606" y="237.5" fill="gray">2</text>
+    <text x="405.93266739736606" y="237.5" fill="gray">2</text>
+    <text x="475.93266739736606" y="237.5" fill="gray">2</text>
+
+    <!-- Dimensions for AE -->
+    <g transform="translate(150, 250) rotate(30)">
+        <line x1="0" y1="50" x2="210" y2="50" stroke="gray" stroke-width="1"/>
+        <line x1="0" y1="45" x2="0" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="58.345" y1="45" x2="58.345" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="105" y1="45" x2="105" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="210" y1="45" x2="210" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="0" y1="10" x2="0" y2="50" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="210" y1="10" x2="210" y2="50" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <text x="14.049999999999997" y="40" fill="gray">1,667</text>
+        <text x="66.55" y="40" fill="gray">1,333</text>
+        <text x="142.5" y="40" fill="gray">3</text>
+    </g>
+
+    <!-- Angles -->
+    <line x1="150" y1="250" x2="200" y2="250" stroke="gray" stroke-width="1"/>
+    <path d="M 190 250 A 40 40 0 1 0 184.64101615137756 270.0" fill="none" stroke="gray" stroke-width="1"/>
+    <text x="195" y="270" fill="gray" font-size="12">330&deg;</text>
+
+    <line x1="450.932667397366" y1="302.5" x2="400.932667397366" y2="302.5" stroke="gray" stroke-width="1"/>
+    <path d="M 420.932667397366 302.5 A 30 30 0 0 1 445.7232220673581 272.9557674096338" fill="none" stroke="gray" stroke-width="1"/>
+    <text x="410.932667397366" y="322.5" fill="gray" font-size="12">100&deg;</text>
+    
+    <!-- F1 angle -->
+    <path d="M 349.1858428704209 365.0 A 20 20 0 0 0 331.8653347947321 375.0" fill="none" stroke="gray" stroke-width="1"/>
+    <text x="356.8653347947321" y="340.0" fill="gray" font-size="12">90&deg;</text>
+
+    <text x="135" y="265" font-style="italic" font-size="18">A</text>
+    <text x="225.93266739736606" y="327.5" font-style="italic" font-size="18">B</text>
+    <text x="540.932667397366" y="292.5" font-style="italic" font-size="18">D</text>
+    <text x="370.93266739736606" y="287.5" font-style="italic" font-size="18">C</text>
+    <text x="341.8653347947321" y="365.0" font-style="italic" font-size="18">E</text>
+
+    <!-- A Reactions -->
+    <line x1="150" y1="250" x2="200" y2="250" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="195" y="235" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">Ax</tspan></text>
+    <line x1="150" y1="300" x2="150" y2="250" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="165" y="295" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">Ay</tspan></text>
+    
+    <!-- D Reaction -->
+    <line x1="520.932667397366" y1="352.5" x2="520.932667397366" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="495.932667397366" y="337.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">D</tspan></text>
+    
+    <!-- C Reaction -->
+    <line x1="380.93266739736606" y1="352.5" x2="380.93266739736606" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="355.93266739736606" y="337.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">C</tspan></text>
+
+    <!-- F1, F2 -->
+    <line x1="331.8653347947321" y1="305.0" x2="331.8653347947321" y2="355.0" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="311.8653347947321" y="330.0" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">F</tspan><tspan dy="5" font-size="10" text-decoration="none">1</tspan></text>
+    
+    <line x1="442.2502585140195" y1="253.2596123493896" x2="450.932667397366" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="430.932667397366" y="277.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">F</tspan><tspan dy="5" font-size="10" text-decoration="none">2</tspan></text>
+    
+    <!-- Q1, Q2 -->
+    <line x1="380.932667397366" y1="342.5" x2="380.932667397366" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="390.932667397366" y="332.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">Q</tspan><tspan dy="5" font-size="10" text-decoration="none">2</tspan></text>
+    
+    <g transform="translate(150, 250) rotate(30)">
+        <line x1="58.345" y1="-40" x2="58.345" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="38.345" y="-20" fill="black" transform="rotate(-30, 38.345, -20)" font-style="italic" font-weight="bold"><tspan text-decoration="overline">Q</tspan><tspan dy="5" font-size="10" text-decoration="none">1</tspan></text>
+    </g>
+
+    <!-- Moments -->
+    <path d="M 180 270 A 30 30 0 1 0 130 230" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="120" y="225" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">M</tspan><tspan dy="5" font-size="10" text-decoration="none">1</tspan></text>
+    <path d="M 290.93266739736606 322.5 A 30 30 0 1 0 250.93266739736606 272.5" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="255.93266739736606" y="267.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">M</tspan><tspan dy="5" font-size="10" text-decoration="none">2</tspan></text>
+</svg>
+</div>
+
+<div class="page-break"></div>
+<h2>3. Sprendimas</h2>
+
+<h3>3.1. Kūno AE pusiausvyra</h3>
+<div class="schema-container">
+<svg width="400" height="300" viewBox="100 150 400 300">
+    
+        <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+            </marker>
+        </defs>
+        
+    <line x1="150" y1="250" x2="331.8653347947321" y2="355.0" stroke="gray" stroke-width="4" />
+    <circle cx="150" cy="250" r="4" fill="white" stroke="gray" stroke-width="2"/>
+    <circle cx="240.93266739736606" cy="302.5" r="4" fill="white" stroke="gray" stroke-width="2"/>
+    <text x="135" y="265" font-style="italic" font-size="18">A</text>
+    <text x="255.93266739736606" y="297.5" font-style="italic" font-size="18">B</text>
+    <text x="341.8653347947321" y="365.0" font-style="italic" font-size="18">E</text>
+
+    <!-- Dimensions for AE with numerical values -->
+    <g transform="translate(150, 250) rotate(30)">
+        <line x1="0" y1="50" x2="210" y2="50" stroke="gray" stroke-width="1"/>
+        <line x1="0" y1="45" x2="0" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="58.345" y1="45" x2="58.345" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="105" y1="45" x2="105" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="210" y1="45" x2="210" y2="55" stroke="gray" stroke-width="1"/>
+        <line x1="0" y1="10" x2="0" y2="50" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <line x1="210" y1="10" x2="210" y2="50" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+        <text x="14.049999999999997" y="40" fill="gray">1,667</text>
+        <text x="66.55" y="40" fill="gray">1,333</text>
+        <text x="142.5" y="40" fill="gray">3</text>
+    </g>
+
+    <!-- A Reactions -->
+    <line x1="100" y1="250" x2="150" y2="250" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="105" y="245" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">Ax</tspan></text>
+    <line x1="150" y1="300" x2="150" y2="250" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="155" y="295" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">Ay</tspan></text>
+
+    <!-- B Reactions (Pointing Right and Up) -->
+    <line x1="190.93266739736606" y1="302.5" x2="240.93266739736606" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="195.93266739736606" y="297.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">Bx</tspan></text>
+    <line x1="240.93266739736606" y1="352.5" x2="240.93266739736606" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="245.93266739736606" y="347.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">By</tspan></text>
+
+    <line x1="331.8653347947321" y1="305.0" x2="331.8653347947321" y2="355.0" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="316.8653347947321" y="330.0" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">F</tspan><tspan dy="5" font-size="10" text-decoration="none">1</tspan></text>
+    
+    <g transform="translate(150, 250) rotate(30)">
+        <line x1="58.345" y1="-40" x2="58.345" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="63.345" y="-25" fill="black" transform="rotate(-30, 63.345, -25)" font-style="italic" font-weight="bold"><tspan text-decoration="overline">Q</tspan><tspan dy="5" font-size="10" text-decoration="none">1</tspan></text>
+    </g>
+
+    <path d="M 180 270 A 30 30 0 1 0 130 230" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="120" y="225" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">M</tspan><tspan dy="5" font-size="10" text-decoration="none">1</tspan></text>
+</svg>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <p>Užrašomos kūno AE pusiausvyros sąlygos:</p>
+    <div class="system-bracket">
+        <p class="eq">&sum; F<sub>ix</sub> = 0;</p>
+        <p class="eq">&sum; F<sub>iy</sub> = 0;</p>
+        <p class="eq">&sum; M<sub>A</sub>(<span style="text-decoration: overline">F</span><sub>i</sub>) = 0.</p>
+    </div>
+    <div class="system-bracket">
+        <p class="eq">R<sub>Ax</sub> - Q<sub>1</sub> &middot; sin(30&deg;) + R<sub>Bx</sub> = 0; (1)</p>
+        <p class="eq">R<sub>Ay</sub> - Q<sub>1</sub> &middot; cos(30&deg;) - F<sub>1</sub> + R<sub>By</sub> = 0; (2)</p>
+        <p class="eq">M<sub>1</sub> - Q<sub>1</sub> &middot; a<sub>1</sub> + R<sub>Bx</sub> &middot; l<sub>2</sub> &middot; sin(30&deg;) + R<sub>By</sub> &middot; l<sub>2</sub> &middot; cos(30&deg;) - F<sub>1</sub> &middot; l<sub>1</sub> &middot; cos(30&deg;) = 0. (3)</p>
+    </div>
+    <div class="system-bracket" style="margin-top: 10px;">
+        <p class="eq">R<sub>Ax</sub> - 3,5 &middot; 0,500 + R<sub>Bx</sub> = 0;</p>
+        <p class="eq">R<sub>Ay</sub> - 3,5 &middot; 0,866 - 8,5 + R<sub>By</sub> = 0;</p>
+        <p class="eq">5,5 - 3,5 &middot; 1,667 + R<sub>Bx</sub> &middot; 3 &middot; 0,500 + R<sub>By</sub> &middot; 3 &middot; 0,866 - 8,5 &middot; 6 &middot; 0,866 = 0.</p>
+    </div>
+</div>
+
+<p>R<sub>Ax</sub> + R<sub>Bx</sub> = 1,75; (1)</p>
+<p>R<sub>Ay</sub> + R<sub>By</sub> = 11,53; (2)</p>
+<p>1,5 &middot; R<sub>Bx</sub> + 2,6 &middot; R<sub>By</sub> = 44,5. (3)</p>
+
+<h3>3.2. Kūno BD pusiausvyra</h3>
+<div class="schema-container">
+<svg width="500" height="200" viewBox="150 150 500 200">
+    
+        <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+            </marker>
+        </defs>
+        
+    <line x1="240.93266739736606" y1="302.5" x2="520.932667397366" y2="302.5" stroke="gray" stroke-width="4" />
+    <circle cx="240.93266739736606" cy="302.5" r="4" fill="white" stroke="gray" stroke-width="2"/>
+    <text x="240.93266739736606" y="327.5" font-style="italic" font-size="18">B</text>
+    <text x="540.932667397366" y="292.5" font-style="italic" font-size="18">D</text>
+    <text x="370.93266739736606" y="292.5" font-style="italic" font-size="18">C</text>
+    
+    <!-- Dimensions for BD -->
+    <line x1="240.93266739736606" y1="242.5" x2="520.932667397366" y2="242.5" stroke="gray" stroke-width="1"/>
+    <line x1="240.93266739736606" y1="237.5" x2="240.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="310.93266739736606" y1="237.5" x2="310.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="380.93266739736606" y1="237.5" x2="380.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="450.93266739736606" y1="237.5" x2="450.93266739736606" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="520.932667397366" y1="237.5" x2="520.932667397366" y2="247.5" stroke="gray" stroke-width="1"/>
+    <line x1="240.93266739736606" y1="242.5" x2="240.93266739736606" y2="287.5" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+    <line x1="520.932667397366" y1="242.5" x2="520.932667397366" y2="287.5" stroke="gray" stroke-width="1" stroke-dasharray="2"/>
+    <text x="265.93266739736606" y="237.5" fill="gray">2</text>
+    <text x="335.93266739736606" y="237.5" fill="gray">2</text>
+    <text x="405.93266739736606" y="237.5" fill="gray">2</text>
+    <text x="475.93266739736606" y="237.5" fill="gray">2</text>
+
+    <!-- B Reactions from BD perspective (Opposite of AE: Left and Down) -->
+    <line x1="290.93266739736606" y1="302.5" x2="240.93266739736606" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="285.93266739736606" y="297.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R'</tspan><tspan dy="5" font-size="10" text-decoration="none">Bx</tspan></text>
+    <line x1="240.93266739736606" y1="252.5" x2="240.93266739736606" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="245.93266739736606" y="257.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R'</tspan><tspan dy="5" font-size="10" text-decoration="none">By</tspan></text>
+
+    <!-- C, D Reactions -->
+    <line x1="520.932667397366" y1="352.5" x2="520.932667397366" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="525.932667397366" y="347.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">D</tspan></text>
+    <line x1="380.93266739736606" y1="352.5" x2="380.93266739736606" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="385.93266739736606" y="347.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">R</tspan><tspan dy="5" font-size="10" text-decoration="none">C</tspan></text>
+
+    <!-- F2, Q2 -->
+    <line x1="442.2502585140195" y1="253.2596123493896" x2="450.932667397366" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="430.932667397366" y="277.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">F</tspan><tspan dy="5" font-size="10" text-decoration="none">2</tspan></text>
+    <line x1="380.932667397366" y1="262.5" x2="380.932667397366" y2="302.5" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="385.932667397366" y="282.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">Q</tspan><tspan dy="5" font-size="10" text-decoration="none">2</tspan></text>
+
+    <path d="M 290.93266739736606 322.5 A 30 30 0 1 0 250.93266739736606 272.5" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="255.93266739736606" y="267.5" fill="black" font-style="italic" font-weight="bold"><tspan text-decoration="overline">M</tspan><tspan dy="5" font-size="10" text-decoration="none">2</tspan></text>
+</svg>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <p>Užrašomos kūno BD pusiausvyros sąlygos:</p>
+    <div class="system-bracket">
+        <p class="eq">&sum; F<sub>ix</sub> = 0;</p>
+        <p class="eq">&sum; F<sub>iy</sub> = 0;</p>
+        <p class="eq">&sum; M<sub>B</sub>(<span style="text-decoration: overline">F</span><sub>i</sub>) = 0.</p>
+    </div>
+    <div class="system-bracket">
+        <p class="eq">-R'<sub>Bx</sub> + F<sub>2</sub> &middot; cos(100&deg;) = 0; (4)</p>
+        <p class="eq">-R'<sub>By</sub> + Q<sub>2</sub> + F<sub>2</sub> &middot; sin(-100&deg;) + R<sub>C</sub> + R<sub>D</sub> = 0; (5)</p>
+        <p class="eq">M<sub>2</sub> + Q<sub>2</sub> &middot; (l<sub>3</sub> - a<sub>2</sub>) + F<sub>2</sub> &middot; sin(-100&deg;) &middot; (l<sub>3</sub> - l<sub>9</sub>) + R<sub>C</sub> &middot; (l<sub>3</sub> - l<sub>4</sub>) + R<sub>D</sub> &middot; l<sub>3</sub> = 0. (6)</p>
+    </div>
+    <div class="system-bracket" style="margin-top: 10px;">
+        <p class="eq">-R'<sub>Bx</sub> -2,17 = 0; (4)</p>
+        <p class="eq">-R'<sub>By</sub> + 10 -12,31 + R<sub>C</sub> + R<sub>D</sub> = 0; (5)</p>
+        <p class="eq">3 + 10 &middot; 4 -12,31 &middot; 6 + R<sub>C</sub> &middot; 4 + R<sub>D</sub> &middot; 8 = 0. (6)</p>
+    </div>
+</div>
+
+<p>Kadangi pagal trečią Niutono dėsnį R'<sub>Bx</sub> = R<sub>Bx</sub> ir R'<sub>By</sub> = R<sub>By</sub>, tai:</p>
+<p>Iš (4) lygties: R<sub>Bx</sub> = -2,17 kN;</p>
+<p>Iš (1) lygties: R<sub>Ax</sub> + (-2,17) = 1,75 &rarr; R<sub>Ax</sub> = 3,92 kN.</p>
+<p>Iš (3) lygties: 1,5 &middot; (-2,17) + 2,6 &middot; R<sub>By</sub> = 44,5 &rarr; R<sub>By</sub> = 18,38 kN.</p>
+<p>Iš (2) lygties: R<sub>Ay</sub> + (18,38) = 11,53 &rarr; R<sub>Ay</sub> = -6,85 kN.</p>
+
+<p>Pakeičiame (5) lygtyje: R'<sub>By</sub> = R<sub>By</sub> = 18,38 kN:</p>
+<p>-18,38 + 10 -12,31 + R<sub>C</sub> + R<sub>D</sub> = 0 &rarr; R<sub>C</sub> + R<sub>D</sub> = 20,7. (5)</p>
+<p>4 &middot; R<sub>C</sub> + 8 &middot; R<sub>D</sub> = 30,9. (6)</p>
+<p>Iš (5) išsireiškus R<sub>C</sub> ir įstačius į (6), gauname:</p>
+<p>R<sub>D</sub> = -12,98 kN.</p>
+<p>R<sub>C</sub> = 33,7 kN.</p>
+
+<h3>3.3. Sprendimo patikrinimas</h3>
+<p>Užrašoma pusiausvyros sąlyga visai sistemai apie tašką B.</p>
+<p class="eq">&sum; M<sub>B</sub>(<span style="text-decoration: overline">F</span><sub>i</sub>) = M<sub>1</sub> + M<sub>2</sub> - R<sub>Ax</sub> &middot; (l<sub>2</sub> &middot; sin(30&deg;)) - R<sub>Ay</sub> &middot; (l<sub>2</sub> &middot; cos(30&deg;)) + Q<sub>1</sub> &middot; (l<sub>2</sub> - a<sub>1</sub>) - F<sub>1</sub> &middot; (l<sub>1</sub> - l<sub>2</sub>) &middot; cos(30&deg;) + R<sub>C</sub> &middot; (l<sub>3</sub> - l<sub>4</sub>) + R<sub>D</sub> &middot; l<sub>3</sub> + Q<sub>2</sub> &middot; (l<sub>3</sub> - a<sub>2</sub>) + F<sub>2y</sub> &middot; (l<sub>3</sub> - l<sub>9</sub>) = 0</p>
+<p class="eq">&sum; M<sub>B</sub>(<span style="text-decoration: overline">F</span><sub>i</sub>) = 5,5 + 3 - (3,92) &middot; 1,5 - (-6,85) &middot; 2,6 + 3,5 &middot; 1,333 - 8,5 &middot; 2,6 + (33,7) &middot; 4 + (-12,98) &middot; 8 + 10 &middot; 4 -12,31 &middot; 6 = 0 kN</p>
+
+<h3>3.4. Paklaidos skaičiavimas</h3>
+<p>&Delta; = (0 / 500) &middot; 100% = 0% &lt; 0,3%.</p>
+
+<div class="page-break"></div>
+<h2>4. Atsakymų lentelė</h2>
+<table>
+  <tr>
+    <th>Varianto Nr.</th>
+    <th>R<sub>Ax</sub>, kN</th>
+    <th>R<sub>Ay</sub>, kN</th>
+    <th>B<sub>x</sub>, kN</th>
+    <th>B<sub>y</sub>, kN</th>
+    <th>R<sub>C</sub>, kN</th>
+    <th>R<sub>D</sub>, kN</th>
+  </tr>
+  <tr>
+    <td>1298</td>
+    <td>3,92</td>
+    <td>-6,85</td>
+    <td>-2,17</td>
+    <td>18,38</td>
+    <td>33,7</td>
+    <td>-12,98</td>
+  </tr>
+</table>
+
+</body>
+</html>
