@@ -9,9 +9,14 @@
 </head>
 <body>
     <header class="main-header">
-        <div class="container header-container">
-            <h1>Premium Auto</h1>
-            <p>Išmanioji skelbimų platforma su AI asistentu</p>
+        <div class="container header-container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1 style="margin-bottom: 5px;">Premium Auto</h1>
+                <p style="margin: 0;">Išmanioji skelbimų platforma su AI asistentu</p>
+            </div>
+            <nav>
+                <a href="admin.html" style="background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.5); color: #93c5fd; padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 0.95rem; transition: all 0.2s;">Pardavėjo Panelė</a>
+            </nav>
         </div>
     </header>
 
@@ -41,22 +46,23 @@
 
             <div class="listing-body">
                 <div class="listing-specs-grid">
-                    <div class="listing-spec">
-                        <span class="spec-label">Metai</span>
-                        <span class="spec-value" id="listingYear">-</span>
-                    </div>
-                    <div class="listing-spec">
-                        <span class="spec-label">Pavarų dėžė</span>
-                        <span class="spec-value" id="listingGearbox">-</span>
-                    </div>
-                    <div class="listing-spec">
-                        <span class="spec-label">Variklis</span>
-                        <span class="spec-value" id="listingEngine">-</span>
-                    </div>
-                    <div class="listing-spec">
-                        <span class="spec-label">Rida</span>
-                        <span class="spec-value" id="listingMileage">-</span>
-                    </div>
+                    <div class="listing-spec"><span class="spec-label">Metai</span><span class="spec-value" id="listingYear">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Pavarų dėžė</span><span class="spec-value" id="listingGearbox">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Variklis</span><span class="spec-value" id="listingEngine">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Rida</span><span class="spec-value" id="listingMileage">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Kėbulo tipas</span><span class="spec-value" id="listingBodyType">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Varomieji ratai</span><span class="spec-value" id="listingDrivetrain">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Galia</span><span class="spec-value" id="listingPower">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Spalva</span><span class="spec-value" id="listingColor">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">TA galioja</span><span class="spec-value" id="listingInspection">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Defektai</span><span class="spec-value" id="listingDefects">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Serviso istorija</span><span class="spec-value" id="listingService">-</span></div>
+                    <div class="listing-spec"><span class="spec-label">Lokacija</span><span class="spec-value" id="listingLocation">-</span></div>
+                </div>
+
+                <div class="listing-vin-section">
+                    <span class="spec-label">VIN Kodas</span>
+                    <div class="vin-display" id="listingVin">-</div>
                 </div>
 
                 <div class="listing-description-section">
@@ -85,50 +91,49 @@
             </div>
             
             <div class="call-interface">
-                <div class="avatar-ring">
+                <div class="avatar-ring" id="callAvatarRing">
                     <div class="avatar">AI</div>
                 </div>
-                <p class="call-status">Sujungiama su AI asistentu...</p>
+                <p class="call-status" id="callStatusText">Jungiamasi...</p>
                 
-                <div class="elevenlabs-widget-container">
-                    <!-- ElevenLabs Conversational AI Widget -->
-                    <!-- JŪSŲ AGENT ID TURI BŪTI ĮRAŠYTAS ŽEMIAU -->
-                    <elevenlabs-convai agent-id="JŪSŲ_ELEVENLABS_AGENT_ID"></elevenlabs-convai>
-                </div>
-                
-                <p class="helper-text">Spauskite ant valdiklio mikrofono ikonos, kad pradėtumėte pokalbį.</p>
+                <button class="call-btn" id="endCallBtn" style="background: #ef4444; margin-top: 20px; display: none;">
+                    Baigti pokalbį
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Load ElevenLabs Web Component -->
-    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+    <script type="module">
+        import { Conversation } from 'https://esm.sh/@elevenlabs/client';
 
-    <script>
         const cars = [
-            { id: 1, make: 'BMW', model: '530', year: 2018, gearbox: 'Automatinė', engine: '3.0 l Dyzelinas', mileage: '185,000 km', price: '26,500 €', phone: '+370 612 11111', image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800', description: 'Automobilis puikios techninės ir vizualinės būklės. Prieš 5000 km pakeisti visi filtrai ir variklio alyva. Pavarų dėžė veikia sklandžiai. Salonas nenutrintas, prižiūrėtas. Važiuoklė be jokių pašalinių garsų. Pridedamas žieminių padangų komplektas su R18 ratlankiais. Yra pilna serviso istorija oficialiame atstove. Parduodu, nes reikia didesnio šeimyninio automobilio.' },
-            { id: 2, make: 'Volkswagen', model: 'Passat', year: 2019, gearbox: 'Automatinė', engine: '2.0 l Dyzelinas', mileage: '210,000 km', price: '18,900 €', phone: '+370 612 22222', image: 'https://images.unsplash.com/photo-1583267746897-ea908c8fc028?auto=format&fit=crop&q=80&w=800', description: 'Patikimas ir ekonomiškas automobilis. Lietuvoje eksploatuojamas dvejus metus, parvežtas iš Vokietijos. Variklis dirba tyliai ir tolygiai, dūmingumo nėra. Pakeistas pagrindinis diržas su vandens pompa prieš 20000 km. Sumontuota gera signalizacija. Kėbulas turi keletą smulkių, vos pastebimų įbrėžimų, kurie netrukdo eksploatacijai. Daugiau informacijos telefonu.' },
-            { id: 3, make: 'Toyota', model: 'RAV4', year: 2021, gearbox: 'Automatinė', engine: '2.5 l Hibridas', mileage: '65,000 km', price: '31,000 €', phone: '+370 612 33333', image: 'https://images.unsplash.com/photo-1620008544865-0c8491295b95?auto=format&fit=crop&q=80&w=800', description: 'Ideali būklė, beveik kaip naujas automobilis. Parduodamas pirmo savininko. Visą laiką aptarnautas tik autorizuotame Toyota servise, galioja gamyklinė garantija. Hibridinė sistema veikia nepriekaištingai, labai ekonomiškas mieste. Aukščiausia komplektacija: odinis salonas, 360 laipsnių kameros, adaptyvus autopilotas. Jokių eismo įvykių nebuvo. Nereikalauja jokių papildomų investicijų.' },
-            { id: 4, make: 'Audi', model: 'A6', year: 2016, gearbox: 'Automatinė', engine: '3.0 l Dyzelinas', mileage: '240,000 km', price: '19,500 €', phone: '+370 612 44444', image: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80&w=800', description: 'S-Line komplektacija. Automobilis labai mylėtas ir prižiūrėtas. Prieš mėnesį atliktas pilnas techninis aptarnavimas. Pakeisti stabdžių diskai ir kaladėlės. Orinė pakaba dirba be priekaištų, nepabėga. Matrix LED žibintai. BOSE garso sistema. Variklis ir pavarų dėžė veikia tobulai, tepalai keisti kas 10-12 tūkst. kilometrų. Galima tikrinti jūsų pasirinktame servise.' },
-            { id: 5, make: 'Skoda', model: 'Octavia', year: 2020, gearbox: 'Mechaninė', engine: '1.5 l Benzinas', mileage: '115,000 km', price: '16,200 €', phone: '+370 612 55555', image: 'https://images.unsplash.com/photo-1590362891991-f700445d3159?auto=format&fit=crop&q=80&w=800', description: 'Tvarkingas ir labai erdvus automobilis. Pirktas naujas Lietuvoje, vienas savininkas. Benzininis variklis labai gyvas ir pakankamai taupus. Mechaninė pavarų dėžė jungiasi lengvai. Salone niekada nebuvo rūkyta. Kėbulas nupoliruotas ir padengtas keramine danga. Pilna priežiūros istorija. Pridedu originalius stogo skersinius bagažinei.' },
-            { id: 6, make: 'Volvo', model: 'XC60', year: 2017, gearbox: 'Automatinė', engine: '2.0 l Dyzelinas', mileage: '198,000 km', price: '22,400 €', phone: '+370 612 66666', image: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?auto=format&fit=crop&q=80&w=800', description: 'AWD visų varančiųjų ratų sistema. Saugus ir patikimas šeimos automobilis. Inscription komplektacija. Tamsiai rudas odinis salonas labai geros būklės. Pakeisti visi diržai, įskaitant ir generatoriaus. Naujas akumuliatorius. Automobilis nereikalauja jokių investicijų, sėdi ir važiuoji. Techninė apžiūra galioja dar metus. Pardavimo priežastis - persikėlimas gyventi į užsienį.' },
-            { id: 7, make: 'Honda', model: 'Civic', year: 2018, gearbox: 'Mechaninė', engine: '1.0 l Benzinas', mileage: '95,000 km', price: '13,800 €', phone: '+370 612 77777', image: 'https://images.unsplash.com/photo-1605810756711-d1f2a33ebf37?auto=format&fit=crop&q=80&w=800', description: 'Puikus miesto automobilis. Labai manevringas ir taupus. Nors variklis nedidelio tūrio, traukos pakanka tiek mieste, tiek užmiestyje. Priežiūra atlikta laiku. Paskutinio aptarnavimo metu pakeistos žvakės, stabdžių skystis, aušinimo skystis. Yra galinio vaizdo kamera, Apple CarPlay ir Android Auto. Kėbulas be rūdžių, neturi jokių paslėptų defektų.' },
-            { id: 8, make: 'Mercedes-Benz', model: 'E220', year: 2017, gearbox: 'Automatinė', engine: '2.0 l Dyzelinas', mileage: '225,000 km', price: '24,900 €', phone: '+370 612 88888', image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=800', description: 'AMG apdaila išorėje ir viduje. Labai komfortiškas ir elegantiškas automobilis. Pilnai skaitmeninis prietaisų skydelis, ambientinis salono apšvietimas. Visi mazgai veikia nepriekaištingai, jokių klaidų skydelyje nėra. Automatinė dėžė bėgius perjunginėja nejuntamai. Rida originali, galima patikrinti pagal VIN kodą. Ką tik praeita techninė apžiūra iš pirmo karto.' },
-            { id: 9, make: 'Ford', model: 'Focus', year: 2019, gearbox: 'Automatinė', engine: '1.5 l Benzinas', mileage: '140,000 km', price: '14,500 €', phone: '+370 612 99999', image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=800', description: 'ST-Line komplektacija. Automobilis atrodo labai sportiškai. Patikimas benzininis variklis. Salonas sportinis, labai patogios sėdynės. Yra šildomas priekinis stiklas, šildomas vairas - labai patogu žiemą. Automobilis prižiūrėtas oficialiame Ford centre. Vasarinės padangos pirktos praėjusį sezoną, todėl protektoriaus likutis didelis. Yra smulkus įbrėžimas ant galinio buferio.' },
-            { id: 10, make: 'Kia', model: 'Sportage', year: 2022, gearbox: 'Automatinė', engine: '1.6 l Benzinas', mileage: '35,000 km', price: '27,800 €', phone: '+370 612 00000', image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?auto=format&fit=crop&q=80&w=800', description: 'Beveik naujas automobilis. Parduodamas dėl pasikeitusių finansinių aplinkybių. Galioja gamyklinė Kia 7 metų garantija. Labai gausi komplektacija, panoraminis stogas, Harman Kardon audio sistema, aklosios zonos asistentai. Automobilis dengtas apsaugine PPF plėvele ant priekinės dalies. Neturi absoliučiai jokių trūkumų. Parduodamas su dviem rakteliais.' }
+            { id: 1, make: 'BMW', model: '530', year: 2018, gearbox: 'Automatinė', engine: '3.0 l Dyzelinas', mileage: '185,000 km', price: '26,500 €', phone: '+370 612 11111', image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800', description: 'Automobilis puikios techninės ir vizualinės būklės. Prieš 5000 km pakeisti visi filtrai ir variklio alyva. Pavarų dėžė veikia sklandžiai. Salonas nenutrintas, prižiūrėtas. Važiuoklė be jokių pašalinių garsų. Pridedamas žieminių padangų komplektas su R18 ratlankiais. Yra pilna serviso istorija oficialiame atstove. Parduodu, nes reikia didesnio šeimyninio automobilio.', body_type: 'Sedanas', drivetrain: 'Galiniai (RWD)', power: '195 kW', color: 'Juoda', technical_inspection: 'Iki 2025-10', known_defects: 'Nėra', service_history: 'Pilna oficialiame servise', vin: 'WBAXX1234567890', car_location: 'Vilnius' },
+            { id: 2, make: 'Volkswagen', model: 'Passat', year: 2019, gearbox: 'Automatinė', engine: '2.0 l Dyzelinas', mileage: '210,000 km', price: '18,900 €', phone: '+370 612 22222', image: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800', description: 'Patikimas ir ekonomiškas automobilis. Lietuvoje eksploatuojamas dvejus metus, parvežtas iš Vokietijos. Variklis dirba tyliai ir tolygiai, dūmingumo nėra. Pakeistas pagrindinis diržas su vandens pompa prieš 20000 km. Sumontuota gera signalizacija. Kėbulas turi keletą smulkių, vos pastebimų įbrėžimų, kurie netrukdo eksploatacijai. Daugiau informacijos telefonu.', body_type: 'Universalas', drivetrain: 'Priekiniai (FWD)', power: '110 kW', color: 'Pilka', technical_inspection: 'Iki 2026-02', known_defects: 'Smulkūs kėbulo įbrėžimai', service_history: 'Dalinė', vin: 'WVWZZZ3CZAE123456', car_location: 'Kaunas' },
+            { id: 3, make: 'Toyota', model: 'RAV4', year: 2021, gearbox: 'Automatinė', engine: '2.5 l Hibridas', mileage: '65,000 km', price: '31,000 €', phone: '+370 612 33333', image: 'https://images.unsplash.com/photo-1620008544865-0c8491295b95?auto=format&fit=crop&q=80&w=800', description: 'Ideali būklė, beveik kaip naujas automobilis. Parduodamas pirmo savininko. Visą laiką aptarnautas tik autorizuotame Toyota servise, galioja gamyklinė garantija. Hibridinė sistema veikia nepriekaištingai, labai ekonomiškas mieste. Aukščiausia komplektacija: odinis salonas, 360 laipsnių kameros, adaptyvus autopilotas. Jokių eismo įvykių nebuvo. Nereikalauja jokių papildomų investicijų.', body_type: 'Visureigis', drivetrain: 'Visi (AWD)', power: '163 kW', color: 'Balta perlamutrinė', technical_inspection: 'Iki 2026-05', known_defects: 'Nėra', service_history: 'Pilna Toyota servise', vin: 'JTMBZ3FVXM0123456', car_location: 'Klaipėda' },
+            { id: 4, make: 'Audi', model: 'A6', year: 2016, gearbox: 'Automatinė', engine: '3.0 l Dyzelinas', mileage: '240,000 km', price: '19,500 €', phone: '+370 612 44444', image: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80&w=800', description: 'S-Line komplektacija. Automobilis labai mylėtas ir prižiūrėtas. Prieš mėnesį atliktas pilnas techninis aptarnavimas. Pakeisti stabdžių diskai ir kaladėlės. Orinė pakaba dirba be priekaištų, nepabėga. Matrix LED žibintai. BOSE garso sistema. Variklis ir pavarų dėžė veikia tobulai, tepalai keisti kas 10-12 tūkst. kilometrų. Galima tikrinti jūsų pasirinktame servise.', body_type: 'Sedanas', drivetrain: 'Visi (Quattro)', power: '200 kW', color: 'Tamsiai mėlyna', technical_inspection: 'Iki 2025-08', known_defects: 'Nedideli akmenukų muštukai ant kapoto', service_history: 'Yra, iki 200k oficialiame', vin: 'WAUZZZ4GZGN123456', car_location: 'Šiauliai' },
+            { id: 5, make: 'Skoda', model: 'Octavia', year: 2020, gearbox: 'Mechaninė', engine: '1.5 l Benzinas', mileage: '115,000 km', price: '16,200 €', phone: '+370 612 55555', image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?auto=format&fit=crop&q=80&w=800', description: 'Tvarkingas ir labai erdvus automobilis. Pirktas naujas Lietuvoje, vienas savininkas. Benzininis variklis labai gyvas ir pakankamai taupus. Mechaninė pavarų dėžė jungiasi lengvai. Salone niekada nebuvo rūkyta. Kėbulas nupoliruotas ir padengtas keramine danga. Pilna priežiūros istorija. Pridedu originalius stogo skersinius bagažinei.', body_type: 'Hečbekas', drivetrain: 'Priekiniai (FWD)', power: '110 kW', color: 'Juoda met.', technical_inspection: 'Iki 2025-11', known_defects: 'Nėra', service_history: 'Pilna oficialiame', vin: 'TMBZZZNEZLY123456', car_location: 'Vilnius' },
+            { id: 6, make: 'Volvo', model: 'XC60', year: 2017, gearbox: 'Automatinė', engine: '2.0 l Dyzelinas', mileage: '198,000 km', price: '22,400 €', phone: '+370 612 66666', image: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?auto=format&fit=crop&q=80&w=800', description: 'AWD visų varančiųjų ratų sistema. Saugus ir patikimas šeimos automobilis. Inscription komplektacija. Tamsiai rudas odinis salonas labai geros būklės. Pakeisti visi diržai, įskaitant ir generatoriaus. Naujas akumuliatorius. Automobilis nereikalauja jokių investicijų, sėdi ir važiuoji. Techninė apžiūra galioja dar metus. Pardavimo priežastis - persikėlimas gyventi į užsienį.', body_type: 'Visureigis', drivetrain: 'Visi (AWD)', power: '140 kW', color: 'Tamsiai ruda', technical_inspection: 'Iki 2025-12', known_defects: 'Nėra', service_history: 'Yra sąskaitos už remonto darbus', vin: 'YV1DZ8256G1123456', car_location: 'Kaunas' },
+            { id: 7, make: 'Honda', model: 'Civic', year: 2018, gearbox: 'Mechaninė', engine: '1.0 l Benzinas', mileage: '95,000 km', price: '13,800 €', phone: '+370 612 77777', image: 'https://images.unsplash.com/photo-1605810756711-d1f2a33ebf37?auto=format&fit=crop&q=80&w=800', description: 'Puikus miesto automobilis. Labai manevringas ir taupus. Nors variklis nedidelio tūrio, traukos pakanka tiek mieste, tiek užmiestyje. Priežiūra atlikta laiku. Paskutinio aptarnavimo metu pakeistos žvakės, stabdžių skystis, aušinimo skystis. Yra galinio vaizdo kamera, Apple CarPlay ir Android Auto. Kėbulas be rūdžių, neturi jokių paslėptų defektų.', body_type: 'Hečbekas', drivetrain: 'Priekiniai (FWD)', power: '95 kW', color: 'Raudona', technical_inspection: 'Iki 2026-03', known_defects: 'Įbrėžtas galinis buferis', service_history: 'Pilna autorizuotam centre', vin: 'SHHFK6760JU123456', car_location: 'Vilnius' },
+            { id: 8, make: 'Mercedes-Benz', model: 'E220', year: 2017, gearbox: 'Automatinė', engine: '2.0 l Dyzelinas', mileage: '225,000 km', price: '24,900 €', phone: '+370 612 88888', image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=800', description: 'AMG apdaila išorėje ir viduje. Labai komfortiškas ir elegantiškas automobilis. Pilnai skaitmeninis prietaisų skydelis, ambientinis salono apšvietimas. Visi mazgai veikia nepriekaištingai, jokių klaidų skydelyje nėra. Automatinė dėžė bėgius perjunginėja nejuntamai. Rida originali, galima patikrinti pagal VIN kodą. Ką tik praeita techninė apžiūra iš pirmo karto.', body_type: 'Sedanas', drivetrain: 'Galiniai (RWD)', power: '143 kW', color: 'Sidabrinė', technical_inspection: 'Iki 2026-06', known_defects: 'Nedideli salono nusidėvėjimo požymiai', service_history: 'Elektroninė MB bazėje', vin: 'WDD2130041A123456', car_location: 'Panevėžys' },
+            { id: 9, make: 'Ford', model: 'Focus', year: 2019, gearbox: 'Automatinė', engine: '1.5 l Benzinas', mileage: '140,000 km', price: '14,500 €', phone: '+370 612 99999', image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=800', description: 'ST-Line komplektacija. Automobilis atrodo labai sportiškai. Patikimas benzininis variklis. Salonas sportinis, labai patogios sėdynės. Yra šildomas priekinis stiklas, šildomas vairas - labai patogu žiemą. Automobilis prižiūrėtas oficialiame Ford centre. Vasarinės padangos pirktos praėjusį sezoną, todėl protektoriaus likutis didelis. Yra smulkus įbrėžimas ant galinio buferio.', body_type: 'Hečbekas', drivetrain: 'Priekiniai (FWD)', power: '110 kW', color: 'Mėlyna', technical_inspection: 'Iki 2025-09', known_defects: 'Smulkus įbrėžimas ant galinio buferio', service_history: 'Pilna oficialiame', vin: 'WF05XXGCC5K123456', car_location: 'Marijampolė' },
+            { id: 10, make: 'Kia', model: 'Sportage', year: 2022, gearbox: 'Automatinė', engine: '1.6 l Benzinas', mileage: '35,000 km', price: '27,800 €', phone: '+370 612 00000', image: 'https://images.unsplash.com/photo-1590362891991-f700445d3159?auto=format&fit=crop&q=80&w=800', description: 'Beveik naujas automobilis. Parduodamas dėl pasikeitusių finansinių aplinkybių. Galioja gamyklinė Kia 7 metų garantija. Labai gausi komplektacija, panoraminis stogas, Harman Kardon audio sistema, aklosios zonos asistentai. Automobilis dengtas apsaugine PPF plėvele ant priekinės dalies. Neturi absoliučiai jokių trūkumų. Parduodamas su dviem rakteliais.', body_type: 'Visureigis', drivetrain: 'Priekiniai (FWD)', power: '110 kW', color: 'Pilka', technical_inspection: 'Iki 2027-01', known_defects: 'Nėra', service_history: 'Atliktas vienas aptarnavimas KIA centre', vin: 'U5YPH8123ML123456', car_location: 'Vilnius' }
         ];
 
         const grid = document.getElementById('carGrid');
         
         // Modal elements
-        const callModal = document.getElementById('callModal');
         const listingModal = document.getElementById('listingModal');
-        const closeCallModal = document.getElementById('closeCallModal');
+        const callModal = document.getElementById('callModal');
         const closeListingModal = document.getElementById('closeListingModal');
+        const closeCallModal = document.getElementById('closeCallModal');
         const modalPhone = document.getElementById('modalPhone');
         const modalContext = document.getElementById('modalContext');
+        const callStatusText = document.getElementById('callStatusText');
+        const endCallBtn = document.getElementById('endCallBtn');
+        const callAvatarRing = document.getElementById('callAvatarRing');
 
         let currentActiveCar = null;
+        let activeConversation = null;
 
         // Render cars
         cars.forEach((car, index) => {
@@ -170,7 +175,7 @@
             grid.appendChild(card);
         });
 
-        function openListingModal(index) {
+        window.openListingModal = function(index) {
             const car = cars[index];
             currentActiveCar = index;
             
@@ -181,6 +186,18 @@
             document.getElementById('listingGearbox').textContent = car.gearbox;
             document.getElementById('listingEngine').textContent = car.engine;
             document.getElementById('listingMileage').textContent = car.mileage;
+            
+            // New fields
+            document.getElementById('listingBodyType').textContent = car.body_type;
+            document.getElementById('listingDrivetrain').textContent = car.drivetrain;
+            document.getElementById('listingPower').textContent = car.power;
+            document.getElementById('listingColor').textContent = car.color;
+            document.getElementById('listingInspection').textContent = car.technical_inspection;
+            document.getElementById('listingDefects').textContent = car.known_defects;
+            document.getElementById('listingService').textContent = car.service_history;
+            document.getElementById('listingVin').textContent = car.vin;
+            document.getElementById('listingLocation').textContent = car.car_location;
+
             document.getElementById('listingDescription').textContent = car.description;
             
             listingModal.classList.add('active');
@@ -188,25 +205,107 @@
         }
 
         document.getElementById('listingCallBtn').onclick = () => {
+            // Start call synchronously inside the user action
+            openCallModal(currentActiveCar);
             listingModal.classList.remove('active');
-            setTimeout(() => {
-                openCallModal(currentActiveCar);
-            }, 300);
         };
 
-        window.openCallModal = function(index) {
+        window.openCallModal = async function(index) {
             const car = cars[index];
             modalPhone.textContent = car.phone;
             modalContext.textContent = `Dėl: ${car.make} ${car.model} (${car.year})`;
             callModal.classList.add('active');
             document.body.style.overflow = 'hidden';
+
+            callStatusText.textContent = "Sujungiama...";
+            endCallBtn.style.display = 'inline-flex';
+            
+            // Pass context to the agent so it knows which car we are calling about
+            const dynamicVars = {
+                car_make: car.make,
+                car_model: car.model,
+                car_year: car.year.toString(),
+                car_price: car.price,
+                car_mileage: car.mileage,
+                car_engine: car.engine,
+                car_fuel: car.engine,
+                car_transmission: car.gearbox,
+                body_type: car.body_type,
+                drivetrain: car.drivetrain,
+                power: car.power,
+                color: car.color,
+                technical_inspection: car.technical_inspection,
+                known_defects: car.known_defects,
+                service_history: car.service_history,
+                vin: car.vin,
+                car_location: car.car_location,
+                listing_description: car.description
+            };
+
+            try {
+                activeConversation = await Conversation.startSession({
+                    agentId: 'agent_7701kt1srczhfm78ndzw2xcem3n9',
+                    dynamicVariables: dynamicVars,
+                    clientTools: {
+                        save_lead: (parameters) => {
+                            try {
+                                const leads = JSON.parse(localStorage.getItem('premium_auto_leads') || '[]');
+                                const newLead = {
+                                    ...parameters,
+                                    date: new Date().toISOString()
+                                };
+                                leads.push(newLead);
+                                localStorage.setItem('premium_auto_leads', JSON.stringify(leads));
+                                console.log("Lead saved successfully:", newLead);
+                                return "Informacija sėkmingai išsaugota.";
+                            } catch (e) {
+                                console.error("Klaida saugant leadą:", e);
+                                return "Nepavyko išsaugoti informacijos.";
+                            }
+                        }
+                    },
+                    onConnect: () => {
+                        callStatusText.textContent = "Sujungta. Pradėkite kalbėti!";
+                        callAvatarRing.classList.add('connected');
+                    },
+                    onDisconnect: () => {
+                        callStatusText.textContent = "Pokalbis baigtas.";
+                        callAvatarRing.classList.remove('connected');
+                        endCallBtn.style.display = 'none';
+                        activeConversation = null;
+                    },
+                    onError: (error) => {
+                        console.error("Agent error:", error);
+                        callStatusText.textContent = "Klaida prisijungiant.";
+                        endCallBtn.style.display = 'none';
+                        activeConversation = null;
+                    },
+                    onModeChange: (mode) => {
+                        if (mode.mode === 'speaking') {
+                            callStatusText.textContent = "Asistentas kalba...";
+                        } else {
+                            callStatusText.textContent = "Asistentas klauso...";
+                        }
+                    }
+                });
+            } catch (err) {
+                console.error("Failed to start session:", err);
+                callStatusText.textContent = "Nepavyko sujungti mikrofoną.";
+            }
         }
 
-        // Close logic
-        closeCallModal.addEventListener('click', () => {
+        // End call logic
+        const closeAndEndCall = () => {
+            if (activeConversation) {
+                activeConversation.endSession();
+                activeConversation = null;
+            }
             callModal.classList.remove('active');
             document.body.style.overflow = '';
-        });
+        };
+
+        endCallBtn.addEventListener('click', closeAndEndCall);
+        closeCallModal.addEventListener('click', closeAndEndCall);
 
         closeListingModal.addEventListener('click', () => {
             listingModal.classList.remove('active');
@@ -216,8 +315,7 @@
         // Close on overlay click
         window.addEventListener('click', (e) => {
             if (e.target === callModal) {
-                callModal.classList.remove('active');
-                document.body.style.overflow = '';
+                closeAndEndCall();
             }
             if (e.target === listingModal) {
                 listingModal.classList.remove('active');
