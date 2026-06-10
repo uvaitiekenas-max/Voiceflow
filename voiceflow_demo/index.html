@@ -220,6 +220,10 @@
             callStatusText.textContent = "Sujungiama...";
             endCallBtn.style.display = 'inline-flex';
             
+            // Track call start time
+            const callStartTime = Date.now();
+            let leadSavedByAgent = false;
+            
             // Pass context to the agent so it knows which car we are calling about
             const dynamicVars = {
                 car_make: car.make,
@@ -249,14 +253,37 @@
                     clientTools: {
                         save_lead: (parameters) => {
                             try {
+                                leadSavedByAgent = true;
+                                const durationMs = Date.now() - callStartTime;
+                                const durationMin = Math.floor(durationMs / 60000);
+                                const durationSec = Math.floor((durationMs % 60000) / 1000);
+                                
                                 const leads = JSON.parse(localStorage.getItem('premium_auto_leads') || '[]');
                                 const newLead = {
                                     ...parameters,
-                                    date: new Date().toISOString()
+                                    car_interested_in: parameters.car_interested_in || `${car.make} ${car.model} (${car.year})`,
+                                    car_price: car.price,
+                                    call_duration: `${durationMin}min ${durationSec}s`,
+                                    date: new Date().toISOString(),
+                                    source: 'agent'
                                 };
                                 leads.push(newLead);
                                 localStorage.setItem('premium_auto_leads', JSON.stringify(leads));
-                                console.log("Lead saved successfully:", newLead);
+                                console.log("Lead saved locally:", newLead);
+
+                                // MAKE.COM INTEGRATION
+                                const webhookUrl = 'https://hook.eu1.make.com/tg8z5f897wtjkryigcpm5w203fdvms1i'; 
+                                if (webhookUrl !== 'YOUR_MAKE_WEBHOOK_URL_HERE') {
+                                    fetch(webhookUrl, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify(newLead)
+                                    }).then(res => console.log("Išsiųsta į Make.com:", res.status))
+                                      .catch(err => console.error("Klaida siunčiant į Make.com:", err));
+                                }
+
                                 return "Informacija sėkmingai išsaugota.";
                             } catch (e) {
                                 console.error("Klaida saugant leadą:", e);
@@ -272,6 +299,29 @@
                         callStatusText.textContent = "Pokalbis baigtas.";
                         callAvatarRing.classList.remove('connected');
                         endCallBtn.style.display = 'none';
+                        
+                        // Auto-save basic call log if agent didn't call save_lead
+                        if (!leadSavedByAgent) {
+                            const durationMs = Date.now() - callStartTime;
+                            const durationMin = Math.floor(durationMs / 60000);
+                            const durationSec = Math.floor((durationMs % 60000) / 1000);
+                            
+                            const leads = JSON.parse(localStorage.getItem('premium_auto_leads') || '[]');
+                            leads.push({
+                                customer_name: 'Nežinoma (agentas neužfiksavo)',
+                                phone_number: 'Nežinoma',
+                                car_interested_in: `${car.make} ${car.model} (${car.year})`,
+                                car_price: car.price,
+                                lead_quality: 'Nenustatyta',
+                                summary: 'Agentas nepersiuntė pokalbio santraukos. Patikrinkite ElevenLabs logus.',
+                                call_duration: `${durationMin}min ${durationSec}s`,
+                                date: new Date().toISOString(),
+                                source: 'auto'
+                            });
+                            localStorage.setItem('premium_auto_leads', JSON.stringify(leads));
+                            console.log("Auto-saved basic call log.");
+                        }
+                        
                         activeConversation = null;
                     },
                     onError: (error) => {

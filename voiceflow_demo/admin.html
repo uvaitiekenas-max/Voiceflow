@@ -134,6 +134,7 @@
                 <p>Gauti klientų skambučiai ir „Leads“ (išsaugoma jūsų naršyklėje)</p>
             </div>
             <div>
+                <button class="btn" id="exportBtn" style="margin-right: 12px; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: #6ee7b7;">📥 Eksportuoti į Excel (CSV)</button>
                 <a href="index.html" class="btn" style="margin-right: 12px;">Grįžti į skelbimus</a>
                 <button class="btn btn-danger" id="clearBtn">Išvalyti visus duomenis</button>
             </div>
@@ -173,11 +174,11 @@
                 const qualityLabel = lead.lead_quality || "Nenustatyta";
 
                 html += `
-                    <div class="lead-card">
+                    <div class="lead-card" style="${lead.source === 'auto' ? 'border-left: 3px solid rgba(245, 158, 11, 0.5);' : 'border-left: 3px solid rgba(16, 185, 129, 0.5);'}">
                         <div class="lead-header">
                             <div>
                                 <div class="lead-name">${lead.customer_name || 'Nežinomas klientas'}</div>
-                                <div class="lead-date">${dateString}</div>
+                                <div class="lead-date">${dateString}${lead.call_duration ? ' • Trukmė: ' + lead.call_duration : ''}</div>
                             </div>
                             <div class="lead-quality ${qualityClass}">${qualityLabel}</div>
                         </div>
@@ -189,13 +190,15 @@
                         
                         <div class="lead-detail">
                             <strong>Domina</strong>
-                            ${lead.car_interested_in || 'Nenurodyta'}
+                            ${lead.car_interested_in || 'Nenurodyta'}${lead.car_price ? ' — ' + lead.car_price : ''}
                         </div>
 
                         <div class="lead-summary">
                             <strong>Pokalbio santrauka ir klausimai:</strong>
                             ${lead.summary || 'Komentarų nėra.'}
                         </div>
+                        
+                        ${lead.source === 'auto' ? '<div style="margin-top: 12px; font-size: 0.75rem; color: #f59e0b; opacity: 0.7;">⚠ Automatinis įrašas (agentas neiškvietė save_lead)</div>' : ''}
                     </div>
                 `;
             });
@@ -213,6 +216,45 @@
 
         // Initial render
         renderLeads();
+
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const leads = JSON.parse(localStorage.getItem('premium_auto_leads') || '[]');
+            if (leads.length === 0) {
+                alert('Nėra jokių duomenų eksportavimui.');
+                return;
+            }
+
+            // Prepare CSV header
+            let csvContent = "Data,Vardas,Telefonas,Automobilis,Kaina,Trukmė,Kokybė,Šaltinis,Santrauka\n";
+
+            // Prepare CSV rows
+            leads.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(lead => {
+                const date = new Date(lead.date).toLocaleString('lt-LT').replace(',', '');
+                const row = [
+                    `"${date}"`,
+                    `"${lead.customer_name || ''}"`,
+                    `"${lead.phone_number || ''}"`,
+                    `"${lead.car_interested_in || ''}"`,
+                    `"${lead.car_price || ''}"`,
+                    `"${lead.call_duration || ''}"`,
+                    `"${lead.lead_quality || ''}"`,
+                    `"${lead.source === 'auto' ? 'Automatinis' : 'Agento'}"`,
+                    `"${(lead.summary || '').replace(/"/g, '""')}"`
+                ];
+                csvContent += row.join(",") + "\n";
+            });
+
+            // Trigger download
+            const blob = new Blob(["\ufeff", csvContent], { type: 'text/csv;charset=utf-8;' }); // \ufeff for Excel UTF-8 BOM
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Premium_Auto_Leads_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
 
         // Listen for changes from other tabs
         window.addEventListener('storage', (e) => {
