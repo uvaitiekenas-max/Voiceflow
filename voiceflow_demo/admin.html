@@ -141,6 +141,16 @@
         </header>
 
         <main id="leadsContainer">
+            <div id="statsBox" style="display: none; padding: 16px 20px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h3 style="margin: 0 0 4px 0; font-size: 1rem; color: #60a5fa;">Skambučių Statistika</h3>
+                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Apskaičiuota pagal išsaugotų skambučių trukmę (Taikomas 0.09 € / min tarifas)</p>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2px;">Vidutinė skambučio kaina:</div>
+                    <div id="avgCostDisplay" style="font-size: 1.5rem; font-weight: 700; color: #fff;">0.00 €</div>
+                </div>
+            </div>
             <!-- Leads will be injected here -->
         </main>
     </div>
@@ -151,6 +161,7 @@
             const leads = JSON.parse(localStorage.getItem('premium_auto_leads') || '[]');
 
             if (leads.length === 0) {
+                document.getElementById('statsBox').style.display = 'none';
                 container.innerHTML = `
                     <div class="empty-state">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5; margin-bottom: 16px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
@@ -160,6 +171,24 @@
                 `;
                 return;
             }
+
+            document.getElementById('statsBox').style.display = 'flex';
+            
+            // Calculate average cost
+            let totalSeconds = 0;
+            let validCalls = 0;
+            leads.forEach(lead => {
+                if (lead.call_duration) {
+                    const match = lead.call_duration.match(/(\d+)min\s*(\d+)s/);
+                    if (match) {
+                        totalSeconds += parseInt(match[1]) * 60 + parseInt(match[2]);
+                        validCalls++;
+                    }
+                }
+            });
+            const avgSeconds = validCalls > 0 ? totalSeconds / validCalls : 0;
+            const avgCost = (avgSeconds / 60) * 0.09; // 0.09 EUR per minute rate
+            document.getElementById('avgCostDisplay').innerText = \`~\${avgCost.toFixed(2)} €\`;
 
             // Sort by newest first
             leads.sort((a, b) => new Date(b.date) - new Date(a.date));
