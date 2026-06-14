@@ -225,6 +225,15 @@
             let leadSavedByAgent = false;
             
             // Pass context to the agent so it knows which car we are calling about
+            // Load available times from Calendar (if exists, fallback to generic string)
+            let availableTimesStr = 'Darbo dienomis nuo 10:00 iki 18:00 val.';
+            try {
+                const savedCal = localStorage.getItem('premium_auto_calendar');
+                if (savedCal) availableTimesStr = savedCal;
+            } catch(e) {
+                console.error('Nepavyko nuskaityti kalendoriaus:', e);
+            }
+
             const dynamicVars = {
                 car_make: car.make,
                 car_model: car.model,
@@ -243,7 +252,8 @@
                 service_history: car.service_history,
                 vin: car.vin,
                 car_location: car.car_location,
-                listing_description: car.description
+                listing_description: car.description,
+                available_times: availableTimesStr
             };
 
             try {

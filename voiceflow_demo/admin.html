@@ -140,6 +140,20 @@
                 <button class="btn btn-danger" id="clearBtn">Išvalyti visus duomenis</button>
             </div>
         </header>
+        </header>
+
+        <!-- CALENDAR SECTION -->
+        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+            <h2 style="margin-top: 0; font-size: 1.2rem; margin-bottom: 8px;">Mano Kalendorius (Apžiūrų laikai)</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">
+                Čia įrašykite savo laisvas valandas laisvu formatu. Šią informaciją tiesiogiai matys jūsų AI agentas ir klientams siūlys tik šiuos laikus.
+            </p>
+            <textarea id="calendarInput" rows="3" style="width: 100%; background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-main); padding: 12px; border-radius: 8px; font-family: inherit; font-size: 0.95rem; resize: vertical;" placeholder="Pvz.: Darbo dienomis nuo 10:00 iki 17:00. Šį savaitgalį esu laisvas tik sekmadienį po pietų."></textarea>
+            <div style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <span id="calendarSavedMsg" style="color: #10b981; font-size: 0.85rem; opacity: 0; transition: opacity 0.3s;">Pakeitimai išsaugoti! AI agentas atnaujintas.</span>
+                <button class="btn btn-primary" id="saveCalendarBtn" style="background: var(--primary-color); color: white; border: none;">Išsaugoti grafiką</button>
+            </div>
+        </div>
 
         <main id="leadsContainer">
 
@@ -203,6 +217,22 @@
                             ${lead.summary || 'Komentarų nėra.'}
                         </div>
                         
+                        ${lead.requested_time ? `
+                        <div style="margin-top: 16px; padding: 12px; background: rgba(59, 130, 246, 0.1); border: 1px dashed #3b82f6; border-radius: 8px;">
+                            <strong style="color: #60a5fa; display: block; margin-bottom: 8px;">Prašomas apžiūros laikas: ${lead.requested_time}</strong>
+                            ${!lead.appointment_status ? `
+                            <div style="display: flex; gap: 8px;">
+                                <button onclick="updateAppointmentStatus(${index}, 'Patvirtinta')" style="flex: 1; background: #10b981; color: white; border: none; padding: 6px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Patvirtinti</button>
+                                <button onclick="updateAppointmentStatus(${index}, 'Atmesta')" style="flex: 1; background: #ef4444; color: white; border: none; padding: 6px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Atmesti</button>
+                            </div>
+                            ` : `
+                            <div style="font-size: 0.9rem; font-weight: bold; color: ${lead.appointment_status === 'Patvirtinta' ? '#10b981' : '#ef4444'}">
+                                Būsena: ${lead.appointment_status}
+                            </div>
+                            `}
+                        </div>
+                        ` : ''}
+                        
                         ${lead.source === 'auto' ? '<div style="margin-top: 12px; font-size: 0.75rem; color: #f59e0b; opacity: 0.7;">⚠ Automatinis įrašas (agentas neiškvietė save_lead)</div>' : ''}
                     </div>
                 `;
@@ -230,7 +260,7 @@
             }
 
             // Prepare CSV header
-            let csvContent = "Data,Vardas,Telefonas,Automobilis,Kaina,Trukmė,Kokybė,Šaltinis,Santrauka\n";
+            let csvContent = "Data,Vardas,Telefonas,Automobilis,Kaina,Trukmė,Kokybė,Šaltinis,Prašomas Laikas,Būsena,Santrauka\n";
 
             // Prepare CSV rows
             leads.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(lead => {
@@ -244,6 +274,8 @@
                     `"${lead.call_duration || ''}"`,
                     `"${lead.lead_quality || ''}"`,
                     `"${lead.source === 'auto' ? 'Automatinis' : 'Agento'}"`,
+                    `"${lead.requested_time || ''}"`,
+                    `"${lead.appointment_status || ''}"`,
                     `"${(lead.summary || '').replace(/"/g, '""')}"`
                 ];
                 csvContent += row.join(",") + "\n";
@@ -260,6 +292,33 @@
             link.click();
             document.body.removeChild(link);
         });
+
+        // Calendar Logic
+        const calendarInput = document.getElementById('calendarInput');
+        const saveBtn = document.getElementById('saveCalendarBtn');
+        const msg = document.getElementById('calendarSavedMsg');
+
+        // Load saved calendar
+        calendarInput.value = localStorage.getItem('premium_auto_calendar') || 'Darbo dienomis nuo 10:00 iki 18:00 val.';
+
+        saveBtn.addEventListener('click', () => {
+            localStorage.setItem('premium_auto_calendar', calendarInput.value);
+            msg.style.opacity = 1;
+            setTimeout(() => { msg.style.opacity = 0; }, 3000);
+        });
+
+        // Appointment Status Update
+        window.updateAppointmentStatus = function(index, status) {
+            const leads = JSON.parse(localStorage.getItem('premium_auto_leads') || '[]');
+            // Since we sorted leads for display, the index passed is from the sorted array.
+            // We need to match the exact lead. To make it simple, we sort the leads array identically before updating.
+            leads.sort((a, b) => new Date(b.date) - new Date(a.date));
+            if(leads[index]) {
+                leads[index].appointment_status = status;
+                localStorage.setItem('premium_auto_leads', JSON.stringify(leads));
+                renderLeads();
+            }
+        };
 
         // Listen for changes from other tabs
         window.addEventListener('storage', (e) => {
